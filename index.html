@@ -2,7 +2,8 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>STABILITY BANK</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -15,165 +16,135 @@
 }
 
 :root{
-    --bg:#07111f;
-    --bg2:#0b1728;
-    --card:rgba(15,28,47,.88);
-    --card2:#102139;
-    --border:rgba(255,255,255,.08);
+    --bg:#070b12;
+    --panel:#0d131d;
+    --panel2:#111925;
+    --border:#202b3b;
     --text:#f4f7fb;
-    --muted:#8292a8;
+    --muted:#8c99aa;
     --blue:#3b82f6;
-    --blue2:#2563eb;
     --green:#22c55e;
     --red:#ef4444;
     --yellow:#f59e0b;
-    --shadow:0 20px 60px rgba(0,0,0,.3);
 }
 
 body{
-    min-height:100vh;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
     background:
-        radial-gradient(circle at 20% 10%,rgba(37,99,235,.15),transparent 30%),
-        radial-gradient(circle at 80% 90%,rgba(34,197,94,.08),transparent 25%),
+        radial-gradient(circle at 20% 0%,rgba(59,130,246,.13),transparent 35%),
+        radial-gradient(circle at 90% 20%,rgba(34,197,94,.07),transparent 30%),
         var(--bg);
     color:var(--text);
-    font-family:Inter,Segoe UI,Arial,sans-serif;
+    min-height:100vh;
 }
 
 /* ================= LOGIN ================= */
 
-#authScreen{
+#loginScreen{
     min-height:100vh;
     display:flex;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     padding:20px;
 }
 
 .login-box{
     width:100%;
     max-width:430px;
-    background:rgba(12,25,42,.92);
+    background:rgba(13,19,29,.92);
     border:1px solid var(--border);
-    border-radius:28px;
-    padding:36px;
-    box-shadow:var(--shadow);
-    backdrop-filter:blur(20px);
+    border-radius:24px;
+    padding:38px;
+    box-shadow:0 30px 100px rgba(0,0,0,.45);
 }
 
 .logo{
-    display:flex;
-    align-items:center;
-    gap:14px;
-    margin-bottom:32px;
+    text-align:center;
+    margin-bottom:30px;
 }
 
 .logo-icon{
-    width:52px;
-    height:52px;
-    border-radius:16px;
+    width:72px;
+    height:72px;
+    margin:auto;
+    border-radius:20px;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,var(--blue),#60a5fa);
-    font-size:25px;
-    box-shadow:0 10px 30px rgba(59,130,246,.3);
+    background:linear-gradient(135deg,#2563eb,#60a5fa);
+    font-size:34px;
+    box-shadow:0 15px 35px rgba(37,99,235,.3);
 }
 
 .logo h1{
-    font-size:21px;
-    letter-spacing:1px;
+    margin-top:18px;
+    font-size:27px;
+    letter-spacing:2px;
 }
 
-.logo span{
-    display:block;
+.logo p{
+    margin-top:7px;
     color:var(--muted);
-    font-size:12px;
-    margin-top:3px;
-}
-
-.login-title{
-    font-size:28px;
-    margin-bottom:8px;
-}
-
-.login-subtitle{
-    color:var(--muted);
-    margin-bottom:28px;
-    font-size:14px;
-}
-
-.field{
-    margin-bottom:18px;
-}
-
-.field label{
-    display:block;
-    margin-bottom:8px;
     font-size:13px;
-    color:#aebbd0;
 }
 
-input,select,textarea{
+.input{
     width:100%;
+    background:#080d15;
     border:1px solid var(--border);
-    background:#081525;
     color:white;
-    border-radius:13px;
-    padding:14px;
+    padding:14px 16px;
+    border-radius:12px;
     outline:none;
-    font-size:14px;
+    margin-top:7px;
     transition:.2s;
 }
 
-input:focus,select:focus,textarea:focus{
+.input:focus{
     border-color:var(--blue);
     box-shadow:0 0 0 3px rgba(59,130,246,.12);
 }
 
-button{
-    border:0;
-    cursor:pointer;
-    font:inherit;
+.form-group{
+    margin-bottom:17px;
 }
 
-.btn{
+.form-group label{
+    font-size:13px;
+    color:var(--muted);
+}
+
+.primary-btn{
     width:100%;
-    padding:14px 18px;
-    border-radius:13px;
+    border:0;
+    border-radius:12px;
+    padding:14px;
     color:white;
-    background:linear-gradient(135deg,var(--blue),var(--blue2));
     font-weight:700;
+    cursor:pointer;
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
     transition:.2s;
 }
 
-.btn:hover{
+.primary-btn:hover{
     transform:translateY(-1px);
     filter:brightness(1.08);
 }
 
-.btn:disabled{
+.primary-btn:disabled{
     opacity:.6;
     cursor:not-allowed;
-    transform:none;
 }
 
 .error{
-    display:none;
-    margin-top:15px;
-    padding:13px;
-    border-radius:12px;
     background:rgba(239,68,68,.1);
-    border:1px solid rgba(239,68,68,.25);
-    color:#fca5a5;
+    border:1px solid rgba(239,68,68,.3);
+    color:#ff8d8d;
+    padding:12px;
+    border-radius:10px;
     font-size:13px;
-}
-
-.login-help{
-    text-align:center;
-    color:var(--muted);
-    font-size:12px;
-    margin-top:20px;
+    margin-bottom:15px;
+    display:none;
 }
 
 /* ================= APP ================= */
@@ -183,97 +154,27 @@ button{
     min-height:100vh;
 }
 
-.layout{
-    display:flex;
-    min-height:100vh;
-}
-
-.sidebar{
-    width:250px;
-    background:rgba(7,17,31,.92);
-    border-right:1px solid var(--border);
-    padding:20px 15px;
-    position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    z-index:20;
-}
-
-.side-logo{
-    padding:8px 12px 25px;
-    display:flex;
-    gap:11px;
-    align-items:center;
-}
-
-.side-logo .logo-icon{
-    width:42px;
-    height:42px;
-    font-size:20px;
-}
-
-.side-logo h2{
-    font-size:15px;
-}
-
-.side-logo span{
-    font-size:10px;
-    color:var(--muted);
-}
-
-.nav-title{
-    color:#52647b;
-    text-transform:uppercase;
-    font-size:10px;
-    font-weight:800;
-    letter-spacing:1px;
-    padding:14px 12px 8px;
-}
-
-.nav button{
-    width:100%;
-    background:transparent;
-    color:#8d9db2;
-    padding:12px;
-    border-radius:11px;
-    text-align:left;
-    margin-bottom:4px;
-    transition:.2s;
-}
-
-.nav button:hover,
-.nav button.active{
-    color:white;
-    background:rgba(59,130,246,.13);
-}
-
-.nav button span{
-    margin-right:10px;
-}
-
-.main{
-    margin-left:250px;
-    width:calc(100% - 250px);
-}
-
 .topbar{
     height:72px;
+    padding:0 28px;
     border-bottom:1px solid var(--border);
+    background:rgba(7,11,18,.88);
+    backdrop-filter:blur(15px);
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding:0 30px;
-    background:rgba(7,17,31,.7);
-    backdrop-filter:blur(15px);
     position:sticky;
     top:0;
-    z-index:10;
+    z-index:50;
 }
 
-.top-title{
-    font-size:18px;
-    font-weight:700;
+.brand{
+    font-weight:800;
+    letter-spacing:1.5px;
+}
+
+.brand span{
+    color:#60a5fa;
 }
 
 .user-area{
@@ -282,46 +183,86 @@ button{
     gap:12px;
 }
 
-.user-avatar{
-    width:38px;
-    height:38px;
+.avatar{
+    width:40px;
+    height:40px;
     border-radius:12px;
+    background:#172235;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:linear-gradient(135deg,#1d4ed8,#60a5fa);
     font-weight:800;
 }
 
 .user-info{
-    line-height:1.2;
+    text-align:right;
 }
 
 .user-name{
-    font-size:13px;
+    font-size:14px;
     font-weight:700;
 }
 
 .user-role{
-    font-size:10px;
+    font-size:11px;
     color:var(--muted);
 }
 
 .logout{
-    background:rgba(239,68,68,.1);
-    color:#f87171;
-    padding:9px 12px;
-    border-radius:10px;
-    margin-left:8px;
+    border:1px solid var(--border);
+    background:#111925;
+    color:#fff;
+    padding:9px 13px;
+    border-radius:9px;
+    cursor:pointer;
 }
 
-.content{
+.layout{
+    display:flex;
+    min-height:calc(100vh - 72px);
+}
+
+.sidebar{
+    width:250px;
+    border-right:1px solid var(--border);
+    padding:20px 14px;
+    background:#090e16;
+}
+
+.nav-title{
+    color:#667386;
+    font-size:10px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    padding:10px;
+}
+
+.nav-btn{
+    width:100%;
+    border:0;
+    background:transparent;
+    color:#aab5c4;
+    padding:12px;
+    border-radius:10px;
+    text-align:left;
+    cursor:pointer;
+    margin-bottom:4px;
+    font-size:14px;
+}
+
+.nav-btn:hover,
+.nav-btn.active{
+    background:#131d2c;
+    color:white;
+}
+
+.main{
+    flex:1;
     padding:30px;
     max-width:1500px;
     margin:auto;
+    width:100%;
 }
-
-/* ================= DASHBOARD ================= */
 
 .page{
     display:none;
@@ -335,99 +276,88 @@ button{
     margin-bottom:25px;
 }
 
-.page-header h1{
-    font-size:28px;
-    margin-bottom:6px;
+.page-header h2{
+    font-size:27px;
 }
 
 .page-header p{
     color:var(--muted);
-    font-size:13px;
+    margin-top:5px;
 }
 
-.stats{
+/* ================= CARDS ================= */
+
+.cards{
     display:grid;
     grid-template-columns:repeat(4,1fr);
     gap:16px;
-    margin-bottom:20px;
+    margin-bottom:24px;
 }
 
-.stat{
-    background:var(--card);
+.card{
+    background:linear-gradient(145deg,#0e1622,#0b111a);
     border:1px solid var(--border);
-    border-radius:20px;
-    padding:22px;
-    box-shadow:0 10px 30px rgba(0,0,0,.12);
+    border-radius:17px;
+    padding:21px;
 }
 
-.stat-top{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:18px;
-}
-
-.stat-icon{
-    width:40px;
-    height:40px;
-    border-radius:12px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(59,130,246,.12);
-}
-
-.stat-label{
+.card-label{
     color:var(--muted);
     font-size:12px;
 }
 
-.stat-value{
+.card-value{
     font-size:25px;
     font-weight:800;
+    margin-top:9px;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:18px;
+.green{
+    color:#4ade80;
 }
 
-.card{
-    background:var(--card);
-    border:1px solid var(--border);
-    border-radius:20px;
-    padding:22px;
+.red{
+    color:#fb7185;
 }
 
-.card-title{
-    font-weight:750;
-    margin-bottom:18px;
+.blue{
+    color:#60a5fa;
 }
 
-.balance-card{
-    background:
-        radial-gradient(circle at 90% 10%,rgba(96,165,250,.2),transparent 30%),
-        linear-gradient(135deg,#102a4b,#0c1b30);
-}
-
-.balance-label{
-    color:#93a6bf;
-    font-size:13px;
-}
-
-.balance{
-    font-size:38px;
-    font-weight:900;
-    margin:10px 0 6px;
-}
-
-.account-number{
-    color:#71849c;
-    font-size:12px;
+.yellow{
+    color:#fbbf24;
 }
 
 /* ================= TABLE ================= */
+
+.panel{
+    background:#0d131d;
+    border:1px solid var(--border);
+    border-radius:17px;
+    overflow:hidden;
+}
+
+.panel-head{
+    padding:18px 20px;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.panel-head h3{
+    font-size:15px;
+}
+
+.search{
+    width:250px;
+    background:#080d15;
+    border:1px solid var(--border);
+    border-radius:9px;
+    padding:9px 12px;
+    color:white;
+    outline:none;
+}
 
 .table-wrap{
     overflow-x:auto;
@@ -439,201 +369,150 @@ table{
 }
 
 th{
-    color:#667991;
-    text-align:left;
+    color:#728096;
     font-size:11px;
     text-transform:uppercase;
-    letter-spacing:.5px;
-    padding:12px;
-    border-bottom:1px solid var(--border);
+    letter-spacing:.6px;
+    text-align:left;
+    padding:14px 18px;
+    background:#0b111a;
 }
 
 td{
-    padding:14px 12px;
-    border-bottom:1px solid rgba(255,255,255,.05);
+    padding:15px 18px;
+    border-top:1px solid #182231;
     font-size:13px;
 }
 
-tr:last-child td{
-    border-bottom:0;
+tr:hover td{
+    background:#101823;
 }
+
+/* ================= BADGES ================= */
 
 .badge{
     display:inline-flex;
-    align-items:center;
     padding:5px 9px;
-    border-radius:8px;
+    border-radius:7px;
     font-size:10px;
     font-weight:700;
 }
 
-.badge.green{
-    background:rgba(34,197,94,.1);
-    color:#4ade80;
+.badge-admin{
+    background:rgba(139,92,246,.12);
+    color:#a78bfa;
 }
 
-.badge.red{
-    background:rgba(239,68,68,.1);
-    color:#f87171;
-}
-
-.badge.yellow{
-    background:rgba(245,158,11,.1);
-    color:#fbbf24;
-}
-
-.badge.blue{
-    background:rgba(59,130,246,.1);
+.badge-player{
+    background:rgba(59,130,246,.12);
     color:#60a5fa;
 }
 
-/* ================= FORMS ================= */
-
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:15px;
-}
-
-.form-full{
-    grid-column:1/-1;
-}
-
-.actions{
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-}
-
-.btn-small{
-    padding:10px 14px;
-    border-radius:10px;
-    font-size:12px;
-    font-weight:700;
-}
-
-.btn-blue{
-    background:rgba(59,130,246,.13);
-    color:#60a5fa;
-}
-
-.btn-green{
+.badge-active{
     background:rgba(34,197,94,.12);
     color:#4ade80;
 }
 
-.btn-red{
+.badge-frozen{
     background:rgba(239,68,68,.12);
-    color:#f87171;
+    color:#fb7185;
 }
 
-.btn-yellow{
-    background:rgba(245,158,11,.12);
-    color:#fbbf24;
+/* ================= BUTTONS ================= */
+
+.btn{
+    border:1px solid var(--border);
+    background:#131c29;
+    color:white;
+    border-radius:8px;
+    padding:8px 11px;
+    cursor:pointer;
+    font-size:12px;
+}
+
+.btn:hover{
+    background:#1b2839;
+}
+
+.btn-blue{
+    background:#2563eb;
+    border-color:#2563eb;
+}
+
+.btn-green{
+    background:#15803d;
+    border-color:#15803d;
+}
+
+.btn-red{
+    background:#991b1b;
+    border-color:#991b1b;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
 }
 
 /* ================= PROFILE ================= */
 
-.profile-head{
-    display:flex;
-    align-items:center;
-    gap:18px;
-    padding-bottom:22px;
-    margin-bottom:22px;
-    border-bottom:1px solid var(--border);
+.profile-grid{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:20px;
+}
+
+.profile-card{
+    background:#0d131d;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:25px;
 }
 
 .big-avatar{
-    width:72px;
-    height:72px;
-    border-radius:20px;
-    background:linear-gradient(135deg,var(--blue),#60a5fa);
+    width:90px;
+    height:90px;
+    border-radius:25px;
+    background:linear-gradient(135deg,#1d4ed8,#60a5fa);
     display:flex;
-    align-items:center;
     justify-content:center;
-    font-size:28px;
-    font-weight:900;
+    align-items:center;
+    font-size:35px;
+    font-weight:800;
+    margin-bottom:18px;
 }
 
-.profile-head h2{
-    margin-bottom:5px;
+.profile-name{
+    font-size:20px;
+    font-weight:800;
 }
 
-.profile-head p{
+.profile-role{
     color:var(--muted);
-    font-size:12px;
+    margin-top:5px;
 }
 
-/* ================= MOBILE ================= */
-
-.mobile-menu{
-    display:none;
+.info-list{
+    margin-top:25px;
 }
 
-@media(max-width:900px){
-    .sidebar{
-        transform:translateX(-100%);
-        transition:.25s;
-    }
-
-    .sidebar.open{
-        transform:translateX(0);
-    }
-
-    .main{
-        margin-left:0;
-        width:100%;
-    }
-
-    .mobile-menu{
-        display:block;
-        background:transparent;
-        color:white;
-        font-size:22px;
-        margin-right:15px;
-    }
-
-    .topbar{
-        padding:0 15px;
-    }
-
-    .content{
-        padding:20px 15px;
-    }
-
-    .stats{
-        grid-template-columns:repeat(2,1fr);
-    }
-
-    .grid{
-        grid-template-columns:1fr;
-    }
+.info{
+    padding:13px 0;
+    border-bottom:1px solid #1a2431;
 }
 
-@media(max-width:600px){
-    .login-box{
-        padding:25px;
-    }
+.info:last-child{
+    border-bottom:0;
+}
 
-    .stats{
-        grid-template-columns:1fr;
-    }
+.info-label{
+    font-size:11px;
+    color:#718096;
+}
 
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .top-title{
-        font-size:15px;
-    }
-
-    .user-info{
-        display:none;
-    }
-
-    .balance{
-        font-size:30px;
-    }
+.info-value{
+    margin-top:4px;
 }
 
 /* ================= MODAL ================= */
@@ -641,10 +520,11 @@ tr:last-child td{
 .modal{
     position:fixed;
     inset:0;
-    background:rgba(0,0,0,.65);
+    background:rgba(0,0,0,.7);
+    backdrop-filter:blur(5px);
     display:none;
-    align-items:center;
     justify-content:center;
+    align-items:center;
     padding:20px;
     z-index:100;
 }
@@ -655,26 +535,37 @@ tr:last-child td{
 
 .modal-box{
     width:100%;
-    max-width:550px;
+    max-width:600px;
     max-height:90vh;
     overflow:auto;
-    background:#0d1b2d;
+    background:#0d131d;
     border:1px solid var(--border);
-    border-radius:22px;
+    border-radius:20px;
     padding:25px;
-    box-shadow:var(--shadow);
 }
 
 .modal-head{
     display:flex;
     justify-content:space-between;
-    margin-bottom:22px;
+    align-items:center;
+    margin-bottom:20px;
 }
 
 .close{
-    background:transparent;
-    color:#7e8da2;
-    font-size:22px;
+    border:0;
+    background:#182230;
+    color:white;
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.modal-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    margin-top:20px;
 }
 
 /* ================= TOAST ================= */
@@ -683,740 +574,667 @@ tr:last-child td{
     position:fixed;
     right:20px;
     bottom:20px;
-    background:#122238;
+    background:#111a27;
     border:1px solid var(--border);
-    border-radius:14px;
+    border-radius:12px;
     padding:14px 18px;
-    box-shadow:var(--shadow);
-    transform:translateY(100px);
-    opacity:0;
-    transition:.25s;
-    z-index:500;
-    max-width:350px;
-    font-size:13px;
+    display:none;
+    z-index:300;
+    box-shadow:0 20px 50px rgba(0,0,0,.4);
 }
 
 #toast.show{
-    transform:translateY(0);
-    opacity:1;
+    display:block;
 }
 
-#toast.success{
-    border-color:rgba(34,197,94,.3);
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+    .cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .profile-grid{
+        grid-template-columns:1fr;
+    }
 }
 
-#toast.error{
-    border-color:rgba(239,68,68,.3);
+@media(max-width:700px){
+
+    .topbar{
+        padding:0 14px;
+    }
+
+    .sidebar{
+        position:fixed;
+        left:-270px;
+        top:72px;
+        bottom:0;
+        z-index:40;
+        transition:.25s;
+    }
+
+    .sidebar.open{
+        left:0;
+    }
+
+    .main{
+        padding:18px;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .user-info{
+        display:none;
+    }
+
+    .search{
+        width:100%;
+    }
+
+    .panel-head{
+        flex-direction:column;
+        gap:12px;
+        align-items:stretch;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<!-- =========================================================
+     LOGIN
+========================================================= -->
 
-<div id="authScreen">
+<section id="loginScreen">
 
-    <div class="login-box">
+<div class="login-box">
 
-        <div class="logo">
-            <div class="logo-icon">₽</div>
-            <div>
-                <h1>STABILITY BANK</h1>
-                <span>ФИНАНСОВАЯ СИСТЕМА</span>
-            </div>
-        </div>
+    <div class="logo">
+        <div class="logo-icon">₽</div>
 
-        <h2 class="login-title">Авторизация</h2>
-        <p class="login-subtitle">
-            Войдите в свой банковский аккаунт
-        </p>
+        <h1>STABILITY BANK</h1>
 
-        <form id="loginForm">
-
-            <div class="field">
-                <label>Email</label>
-                <input
-                    id="loginEmail"
-                    type="email"
-                    autocomplete="username"
-                    placeholder="Введите email"
-                    required
-                >
-            </div>
-
-            <div class="field">
-                <label>Пароль</label>
-                <input
-                    id="loginPassword"
-                    type="password"
-                    autocomplete="current-password"
-                    placeholder="Введите пароль"
-                    required
-                >
-            </div>
-
-            <button class="btn" id="loginButton" type="submit">
-                Войти в систему
-            </button>
-
-            <div class="error" id="loginError"></div>
-
-        </form>
-
-        <div class="login-help">
-            Доступ предоставляется администрацией банка
-        </div>
-
+        <p>Банковская система</p>
     </div>
+
+    <div id="loginError" class="error"></div>
+
+    <form id="loginForm">
+
+        <div class="form-group">
+            <label>Электронная почта</label>
+            <input
+                id="email"
+                class="input"
+                type="email"
+                autocomplete="username"
+                placeholder="Введите email"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Пароль</label>
+            <input
+                id="password"
+                class="input"
+                type="password"
+                autocomplete="current-password"
+                placeholder="Введите пароль"
+                required
+            >
+        </div>
+
+        <button
+            id="loginButton"
+            class="primary-btn"
+            type="submit"
+        >
+            Войти
+        </button>
+
+    </form>
 
 </div>
 
+</section>
 
-<!-- ================= APP ================= -->
 
-<div id="app">
+<!-- =========================================================
+     APPLICATION
+========================================================= -->
+
+<section id="app">
+
+<header class="topbar">
+
+    <div class="brand">
+        STABILITY <span>BANK</span>
+    </div>
+
+    <div class="user-area">
+
+        <div class="user-info">
+            <div id="topName" class="user-name">—</div>
+            <div id="topRole" class="user-role">—</div>
+        </div>
+
+        <div id="topAvatar" class="avatar">?</div>
+
+        <button
+            class="logout"
+            onclick="logout()"
+        >
+            Выйти
+        </button>
+
+    </div>
+
+</header>
+
 
 <div class="layout">
 
-    <aside class="sidebar" id="sidebar">
+<aside class="sidebar">
 
-        <div class="side-logo">
-            <div class="logo-icon">₽</div>
-            <div>
-                <h2>STABILITY BANK</h2>
-                <span>CONTROL SYSTEM</span>
-            </div>
+    <div class="nav-title">Главное</div>
+
+    <button
+        class="nav-btn active"
+        onclick="openPage('dashboard',this)"
+    >
+        ◈ Обзор
+    </button>
+
+    <button
+        class="nav-btn"
+        onclick="openPage('profile',this)"
+    >
+        ◉ Мой профиль
+    </button>
+
+
+    <div id="adminNavigation">
+
+        <div class="nav-title">
+            Администрирование
         </div>
 
-        <div class="nav">
-
-            <div class="nav-title">Основное</div>
-
-            <button class="nav-btn active" data-page="dashboard">
-                <span>⌂</span> Главная
-            </button>
-
-            <button class="nav-btn" data-page="profile">
-                <span>♙</span> Профиль
-            </button>
-
-            <button class="nav-btn" data-page="transactions">
-                <span>↕</span> Операции
-            </button>
-
-            <button class="nav-btn" data-page="fines">
-                <span>!</span> Штрафы
-            </button>
-
-            <button class="nav-btn" data-page="loans">
-                <span>₽</span> Кредиты
-            </button>
-
-            <div id="adminNav">
-
-                <div class="nav-title">Администрирование</div>
-
-                <button class="nav-btn" data-page="players">
-                    <span>♟</span> Игроки
-                </button>
-
-                <button class="nav-btn" data-page="bankOperations">
-                    <span>＋</span> Банковские операции
-                </button>
-
-                <button class="nav-btn" data-page="adminFines">
-                    <span>⚠</span> Управление штрафами
-                </button>
-
-                <button class="nav-btn" data-page="adminLoans">
-                    <span>▣</span> Управление кредитами
-                </button>
-
-            </div>
-
-        </div>
-
-    </aside>
-
-
-    <main class="main">
-
-        <header class="topbar">
-
-            <div style="display:flex;align-items:center;">
-                <button class="mobile-menu" id="mobileMenu">☰</button>
-                <div class="top-title" id="pageTitle">
-                    Главная
-                </div>
-            </div>
-
-            <div class="user-area">
-
-                <div class="user-avatar" id="topAvatar">
-                    ?
-                </div>
-
-                <div class="user-info">
-                    <div class="user-name" id="topName">
-                        Загрузка...
-                    </div>
-                    <div class="user-role" id="topRole">
-                        ...
-                    </div>
-                </div>
-
-                <button class="logout" id="logoutButton">
-                    Выйти
-                </button>
-
-            </div>
-
-        </header>
-
-
-        <div class="content">
-
-            <!-- DASHBOARD -->
-
-            <section class="page active" id="page-dashboard">
-
-                <div class="page-header">
-                    <h1>Добро пожаловать</h1>
-                    <p id="dashboardGreeting">
-                        Управление банковским аккаунтом
-                    </p>
-                </div>
-
-                <div class="stats">
-
-                    <div class="stat">
-                        <div class="stat-top">
-                            <span class="stat-label">Баланс</span>
-                            <div class="stat-icon">₽</div>
-                        </div>
-                        <div class="stat-value" id="statBalance">
-                            0 ₽
-                        </div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-top">
-                            <span class="stat-label">Штрафы</span>
-                            <div class="stat-icon">!</div>
-                        </div>
-                        <div class="stat-value" id="statFines">
-                            0 ₽
-                        </div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-top">
-                            <span class="stat-label">Кредиты</span>
-                            <div class="stat-icon">₽</div>
-                        </div>
-                        <div class="stat-value" id="statLoans">
-                            0 ₽
-                        </div>
-                    </div>
-
-                    <div class="stat">
-                        <div class="stat-top">
-                            <span class="stat-label">Статус</span>
-                            <div class="stat-icon">●</div>
-                        </div>
-                        <div class="stat-value" id="statStatus">
-                            Активен
-                        </div>
-                    </div>
-
-                </div>
-
-
-                <div class="grid">
-
-                    <div class="card balance-card">
-
-                        <div class="balance-label">
-                            Доступный баланс
-                        </div>
-
-                        <div class="balance" id="mainBalance">
-                            0 ₽
-                        </div>
-
-                        <div class="account-number" id="accountNumber">
-                            Номер счёта: —
-                        </div>
-
-                    </div>
-
-
-                    <div class="card">
-
-                        <div class="card-title">
-                            Последние операции
-                        </div>
-
-                        <div id="recentTransactions">
-                            Загрузка...
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- PROFILE -->
-
-            <section class="page" id="page-profile">
-
-                <div class="page-header">
-                    <h1>Профиль</h1>
-                    <p>Персональная информация игрока</p>
-                </div>
-
-                <div class="card">
-
-                    <div class="profile-head">
-
-                        <div class="big-avatar" id="profileAvatar">
-                            ?
-                        </div>
-
-                        <div>
-                            <h2 id="profileName">
-                                —
-                            </h2>
-
-                            <p id="profileEmail">
-                                —
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="form-grid">
-
-                        <div class="field">
-                            <label>ФИО</label>
-                            <input id="profileFullName" readonly>
-                        </div>
-
-                        <div class="field">
-                            <label>Дата рождения</label>
-                            <input id="profileBirthDate" readonly>
-                        </div>
-
-                        <div class="field">
-                            <label>Номер паспорта</label>
-                            <input id="profilePassport" readonly>
-                        </div>
-
-                        <div class="field">
-                            <label>Роль</label>
-                            <input id="profileRole" readonly>
-                        </div>
-
-                        <div class="field">
-                            <label>Статус аккаунта</label>
-                            <input id="profileStatus" readonly>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- TRANSACTIONS -->
-
-            <section class="page" id="page-transactions">
-
-                <div class="page-header">
-                    <h1>Операции</h1>
-                    <p>История движения денежных средств</p>
-                </div>
-
-                <div class="card">
-
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-                                <tr>
-                                    <th>Дата</th>
-                                    <th>Тип</th>
-                                    <th>Сумма</th>
-                                    <th>Описание</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="transactionsTable">
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- FINES -->
-
-            <section class="page" id="page-fines">
-
-                <div class="page-header">
-                    <h1>Штрафы</h1>
-                    <p>Ваши начисленные штрафы</p>
-                </div>
-
-                <div class="card">
-
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-                                <tr>
-                                    <th>№</th>
-                                    <th>Название</th>
-                                    <th>Сумма</th>
-                                    <th>Статус</th>
-                                    <th>Действие</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="finesTable">
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- LOANS -->
-
-            <section class="page" id="page-loans">
-
-                <div class="page-header">
-                    <h1>Кредиты</h1>
-                    <p>Ваши кредитные обязательства</p>
-                </div>
-
-                <div class="card">
-
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-                                <tr>
-                                    <th>№</th>
-                                    <th>Сумма</th>
-                                    <th>Остаток</th>
-                                    <th>Статус</th>
-                                    <th>Действие</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="loansTable">
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- PLAYERS -->
-
-            <section class="page" id="page-players">
-
-                <div class="page-header">
-                    <h1>Игроки</h1>
-                    <p>Управление банковскими аккаунтами</p>
-                </div>
-
-                <div class="card">
-
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-                                <tr>
-                                    <th>Игрок</th>
-                                    <th>Email</th>
-                                    <th>Баланс</th>
-                                    <th>Статус</th>
-                                    <th>Действия</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="playersTable">
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- BANK OPERATIONS -->
-
-            <section class="page" id="page-bankOperations">
-
-                <div class="page-header">
-                    <h1>Банковские операции</h1>
-                    <p>Пополнение и снятие средств</p>
-                </div>
-
-                <div class="card">
-
-                    <form id="bankOperationForm">
-
-                        <div class="form-grid">
-
-                            <div class="field">
-                                <label>Игрок</label>
-                                <select id="operationPlayer" required>
-                                    <option value="">Выберите игрока</option>
-                                </select>
-                            </div>
-
-                            <div class="field">
-                                <label>Тип операции</label>
-                                <select id="operationType">
-                                    <option value="deposit">
-                                        Пополнение
-                                    </option>
-                                    <option value="withdraw">
-                                        Снятие
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="field">
-                                <label>Сумма</label>
-                                <input
-                                    id="operationAmount"
-                                    type="number"
-                                    min="1"
-                                    step="0.01"
-                                    required
-                                >
-                            </div>
-
-                            <div class="field">
-                                <label>Описание</label>
-                                <input
-                                    id="operationDescription"
-                                    placeholder="Например: Зарплата"
-                                >
-                            </div>
-
-                            <div class="form-full">
-                                <button class="btn" type="submit">
-                                    Выполнить операцию
-                                </button>
-                            </div>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-            </section>
-
-
-            <!-- ADMIN FINES -->
-
-            <section class="page" id="page-adminFines">
-
-                <div class="page-header">
-                    <h1>Управление штрафами</h1>
-                    <p>Начисление штрафов игрокам</p>
-                </div>
-
-                <div class="card">
-
-                    <form id="fineForm">
-
-                        <div class="form-grid">
-
-                            <div class="field">
-                                <label>Игрок</label>
-                                <select id="finePlayer" required>
-                                    <option value="">Выберите игрока</option>
-                                </select>
-                            </div>
-
-                            <div class="field">
-                                <label>Сумма</label>
-                                <input
-                                    id="fineAmount"
-                                    type="number"
-                                    min="1"
-                                    required
-                                >
-                            </div>
-
-                            <div class="field form-full">
-                                <label>Название штрафа</label>
-                                <input
-                                    id="fineTitle"
-                                    placeholder="Штраф №1"
-                                    required
-                                >
-                            </div>
-
-                            <div class="field form-full">
-                                <label>Описание</label>
-                                <textarea
-                                    id="fineDescription"
-                                    rows="4"
-                                    placeholder="Причина штрафа"
-                                ></textarea>
-                            </div>
-
-                            <div class="form-full">
-                                <button class="btn" type="submit">
-                                    Начислить штраф
-                                </button>
-                            </div>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-            </section>
-
-
-            <!-- ADMIN LOANS -->
-
-            <section class="page" id="page-adminLoans">
-
-                <div class="page-header">
-                    <h1>Управление кредитами</h1>
-                    <p>Выдача кредитов игрокам</p>
-                </div>
-
-                <div class="card">
-
-                    <form id="loanForm">
-
-                        <div class="form-grid">
-
-                            <div class="field">
-                                <label>Игрок</label>
-                                <select id="loanPlayer" required>
-                                    <option value="">Выберите игрока</option>
-                                </select>
-                            </div>
-
-                            <div class="field">
-                                <label>Сумма кредита</label>
-                                <input
-                                    id="loanAmount"
-                                    type="number"
-                                    min="1"
-                                    required
-                                >
-                            </div>
-
-                            <div class="field">
-                                <label>Процент</label>
-                                <input
-                                    id="loanPercent"
-                                    type="number"
-                                    min="0"
-                                    step="0.1"
-                                    value="0"
-                                >
-                            </div>
-
-                            <div class="field">
-                                <label>Срок</label>
-                                <input
-                                    id="loanTerm"
-                                    type="number"
-                                    min="1"
-                                    value="30"
-                                >
-                            </div>
-
-                            <div class="field form-full">
-                                <label>Описание</label>
-                                <textarea
-                                    id="loanDescription"
-                                    rows="3"
-                                ></textarea>
-                            </div>
-
-                            <div class="form-full">
-                                <button class="btn" type="submit">
-                                    Выдать кредит
-                                </button>
-                            </div>
-
-                        </div>
-
-                    </form>
-
-                </div>
-
-            </section>
-
-        </div>
-
-    </main>
-
-</div>
-
-</div>
-
-
-<!-- MODAL -->
-
-<div class="modal" id="playerModal">
-
-    <div class="modal-box">
-
-        <div class="modal-head">
-            <h2>Игрок</h2>
-            <button class="close" onclick="closeModal()">×</button>
-        </div>
-
-        <div id="playerModalContent"></div>
+        <button
+            class="nav-btn"
+            onclick="openPage('players',this)"
+        >
+            ◉ Игроки
+        </button>
+
+        <button
+            class="nav-btn"
+            onclick="openPage('operations',this)"
+        >
+            ◈ Операции
+        </button>
 
     </div>
+
+</aside>
+
+
+<main class="main">
+
+
+<!-- DASHBOARD -->
+
+<section id="page-dashboard" class="page active">
+
+    <div class="page-header">
+
+        <h2>Обзор</h2>
+
+        <p>
+            Добро пожаловать в STABILITY BANK
+        </p>
+
+    </div>
+
+
+    <div id="adminCards" class="cards">
+
+        <div class="card">
+            <div class="card-label">
+                Игроков
+            </div>
+
+            <div
+                id="statPlayers"
+                class="card-value blue"
+            >
+                0
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-label">
+                Общий баланс
+            </div>
+
+            <div
+                id="statBalance"
+                class="card-value green"
+            >
+                0 ₽
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-label">
+                Заморожено
+            </div>
+
+            <div
+                id="statFrozen"
+                class="card-value red"
+            >
+                0
+            </div>
+        </div>
+
+
+        <div class="card">
+            <div class="card-label">
+                Активных
+            </div>
+
+            <div
+                id="statActive"
+                class="card-value yellow"
+            >
+                0
+            </div>
+        </div>
+
+    </div>
+
+
+    <div id="playerBalanceCard" class="card">
+
+        <div class="card-label">
+            Ваш баланс
+        </div>
+
+        <div
+            id="myBalance"
+            class="card-value green"
+        >
+            0 ₽
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- PROFILE -->
+
+<section id="page-profile" class="page">
+
+    <div class="page-header">
+
+        <h2>Профиль</h2>
+
+        <p>
+            Информация о пользователе
+        </p>
+
+    </div>
+
+
+    <div class="profile-grid">
+
+        <div class="profile-card">
+
+            <div
+                id="profileAvatar"
+                class="big-avatar"
+            >
+                ?
+            </div>
+
+            <div
+                id="profileName"
+                class="profile-name"
+            >
+                —
+            </div>
+
+            <div
+                id="profileRole"
+                class="profile-role"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="profile-card">
+
+            <div class="info-list">
+
+                <div class="info">
+                    <div class="info-label">
+                        ФИО
+                    </div>
+
+                    <div
+                        id="profileFullName"
+                        class="info-value"
+                    >
+                        —
+                    </div>
+                </div>
+
+
+                <div class="info">
+                    <div class="info-label">
+                        Дата рождения
+                    </div>
+
+                    <div
+                        id="profileBirth"
+                        class="info-value"
+                    >
+                        —
+                    </div>
+                </div>
+
+
+                <div class="info">
+                    <div class="info-label">
+                        Номер паспорта
+                    </div>
+
+                    <div
+                        id="profilePassport"
+                        class="info-value"
+                    >
+                        —
+                    </div>
+                </div>
+
+
+                <div class="info">
+                    <div class="info-label">
+                        Email
+                    </div>
+
+                    <div
+                        id="profileEmail"
+                        class="info-value"
+                    >
+                        —
+                    </div>
+                </div>
+
+
+                <div class="info">
+                    <div class="info-label">
+                        Статус
+                    </div>
+
+                    <div
+                        id="profileStatus"
+                        class="info-value"
+                    >
+                        —
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- PLAYERS -->
+
+<section id="page-players" class="page">
+
+    <div class="page-header">
+
+        <h2>Игроки</h2>
+
+        <p>
+            Управление пользователями банка
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panel-head">
+
+            <h3>
+                Все игроки
+            </h3>
+
+            <input
+                id="playerSearch"
+                class="search"
+                placeholder="Поиск..."
+                oninput="renderPlayers()"
+            >
+
+        </div>
+
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Пользователь</th>
+
+                        <th>ФИО</th>
+
+                        <th>Баланс</th>
+
+                        <th>Статус</th>
+
+                        <th>Действия</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="playersTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- OPERATIONS -->
+
+<section id="page-operations" class="page">
+
+    <div class="page-header">
+
+        <h2>Операции</h2>
+
+        <p>
+            Управление финансовыми операциями
+        </p>
+
+    </div>
+
+
+    <div class="panel">
+
+        <div class="panel-head">
+
+            <h3>
+                Быстрые операции
+            </h3>
+
+        </div>
+
+        <div style="padding:20px">
+
+            <p style="color:#8c99aa">
+                Выберите игрока в разделе
+                «Игроки», чтобы выполнить
+                финансовую операцию.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================================================
+     EDIT PLAYER MODAL
+========================================================= -->
+
+<div id="editModal" class="modal">
+
+<div class="modal-box">
+
+    <div class="modal-head">
+
+        <h3>
+            Редактирование игрока
+        </h3>
+
+        <button
+            class="close"
+            onclick="closeModal()"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <input type="hidden" id="editId">
+
+
+    <div class="form-group">
+
+        <label>
+            ФИО
+        </label>
+
+        <input
+            id="editFullName"
+            class="input"
+            placeholder="Иванов Иван Иванович"
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            Дата рождения
+        </label>
+
+        <input
+            id="editBirthDate"
+            class="input"
+            type="date"
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            Номер паспорта
+        </label>
+
+        <input
+            id="editPassport"
+            class="input"
+            placeholder="0000 000000"
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>
+            Баланс
+        </label>
+
+        <input
+            id="editBalance"
+            class="input"
+            type="number"
+            step="0.01"
+        >
+
+    </div>
+
+
+    <div class="modal-actions">
+
+        <button
+            class="btn"
+            onclick="closeModal()"
+        >
+            Отмена
+        </button>
+
+        <button
+            class="btn btn-blue"
+            onclick="savePlayer()"
+        >
+            Сохранить
+        </button>
+
+    </div>
+
+</div>
 
 </div>
 
 
 <div id="toast"></div>
+
 
 
 <script>
@@ -1431,8 +1249,9 @@ const SUPABASE_URL =
 const SUPABASE_ANON_KEY =
     "sb_publishable_Ai25dkiDJ8QIkwy89CDUfw_Wo6ay2RY";
 
+
 const supabaseClient =
-    window.supabase.createClient(
+    supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
@@ -1444,155 +1263,169 @@ const supabaseClient =
 
 let currentUser = null;
 let currentProfile = null;
-let currentAccount = null;
-let allPlayers = [];
+let players = [];
 
 
 /* =========================================================
-   HELPERS
+   ELEMENTS
 ========================================================= */
 
-function $(id){
-    return document.getElementById(id);
-}
+const loginScreen =
+    document.getElementById("loginScreen");
 
-function money(value){
-    return Number(value || 0).toLocaleString("ru-RU") + " ₽";
-}
+const app =
+    document.getElementById("app");
 
-function dateFormat(value){
-    if(!value) return "—";
+const loginError =
+    document.getElementById("loginError");
 
-    try{
-        return new Date(value).toLocaleString("ru-RU");
-    }catch{
-        return value;
+const loginButton =
+    document.getElementById("loginButton");
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async () => {
+
+        await checkSession();
+
     }
-}
-
-function escapeHtml(value){
-    if(value === null || value === undefined) return "";
-
-    return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-}
-
-function initials(name){
-    if(!name) return "?";
-
-    return name
-        .trim()
-        .split(/\s+/)
-        .slice(0,2)
-        .map(x => x[0])
-        .join("")
-        .toUpperCase();
-}
-
-function toast(message,type="success"){
-
-    const el = $("toast");
-
-    el.textContent = message;
-    el.className = "";
-    el.id = "toast";
-    el.classList.add("show",type);
-
-    setTimeout(()=>{
-        el.classList.remove("show");
-    },3500);
-}
+);
 
 
 /* =========================================================
-   AUTH
+   LOGIN
 ========================================================= */
 
-$("loginForm").addEventListener("submit",async e=>{
+document
+.getElementById("loginForm")
+.addEventListener(
+    "submit",
+    async function(e){
 
-    e.preventDefault();
+        e.preventDefault();
 
-    const email =
-        $("loginEmail").value.trim();
+        const email =
+            document
+            .getElementById("email")
+            .value
+            .trim();
 
-    const password =
-        $("loginPassword").value;
+        const password =
+            document
+            .getElementById("password")
+            .value;
 
-    const button =
-        $("loginButton");
+        if(!email || !password){
 
-    const error =
-        $("loginError");
+            showLoginError(
+                "Введите email и пароль."
+            );
 
-    error.style.display = "none";
+            return;
 
-    button.disabled = true;
-    button.textContent = "Проверка...";
+        }
 
-    try{
 
-        const {data,error:authError} =
-            await supabaseClient.auth.signInWithPassword({
-                email,
-                password
+        loginButton.disabled = true;
+
+        loginButton.textContent =
+            "Выполняется вход...";
+
+        hideLoginError();
+
+
+        try{
+
+            const {
+                data,
+                error
+            } =
+            await supabaseClient.auth
+            .signInWithPassword({
+
+                email:email,
+
+                password:password
+
             });
 
-        if(authError)
-            throw authError;
 
-        if(!data.user)
-            throw new Error("Пользователь не найден.");
+            if(error){
 
-        currentUser = data.user;
+                console.error(
+                    "LOGIN ERROR:",
+                    error
+                );
 
-        await loadApplication();
+                if(
+                    error.message
+                    .toLowerCase()
+                    .includes("invalid login")
+                ){
 
-    }catch(errorObject){
+                    showLoginError(
+                        "Неверный email или пароль."
+                    );
 
-        console.error(errorObject);
+                }else{
 
-        let message =
-            "Не удалось выполнить вход.";
+                    showLoginError(
+                        error.message
+                    );
 
-        if(
-            errorObject.message
-            ?.toLowerCase()
-            .includes("invalid login credentials")
-        ){
-            message =
-                "Неверный email или пароль. Проверь данные пользователя в Supabase → Authentication → Users.";
+                }
+
+                return;
+
+            }
+
+
+            if(!data.user){
+
+                showLoginError(
+                    "Пользователь не найден."
+                );
+
+                return;
+
+            }
+
+
+            currentUser =
+                data.user;
+
+
+            await loadApplication();
+
+
+        }catch(error){
+
+            console.error(error);
+
+            showLoginError(
+                "Ошибка подключения к серверу."
+            );
+
+        }finally{
+
+            loginButton.disabled = false;
+
+            loginButton.textContent =
+                "Войти";
+
         }
-        else if(
-            errorObject.message
-            ?.toLowerCase()
-            .includes("email not confirmed")
-        ){
-            message =
-                "Email пользователя не подтверждён.";
-        }
-        else if(errorObject.message){
-            message = errorObject.message;
-        }
-
-        error.textContent = message;
-        error.style.display = "block";
-
-    }finally{
-
-        button.disabled = false;
-        button.textContent = "Войти в систему";
 
     }
-
-});
+);
 
 
 /* =========================================================
-   SESSION CHECK
+   CHECK SESSION
 ========================================================= */
 
 async function checkSession(){
@@ -1602,12 +1435,25 @@ async function checkSession(){
         const {
             data,
             error
-        } = await supabaseClient.auth.getSession();
+        } =
+        await supabaseClient
+        .auth
+        .getSession();
 
-        if(error)
-            throw error;
 
-        if(data.session?.user){
+        if(error){
+
+            console.error(
+                "SESSION ERROR:",
+                error
+            );
+
+            return;
+
+        }
+
+
+        if(data.session){
 
             currentUser =
                 data.session.user;
@@ -1618,7 +1464,7 @@ async function checkSession(){
 
     }catch(error){
 
-        console.error("checkSession:",error);
+        console.error(error);
 
     }
 
@@ -1631,68 +1477,89 @@ async function checkSession(){
 
 async function loadApplication(){
 
-    $("authScreen").style.display = "none";
-    $("app").style.display = "block";
+    try{
 
-    await loadProfile();
+        const profile =
+            await loadProfile(
+                currentUser.id
+            );
+
+
+        if(!profile){
+
+            await supabaseClient.auth.signOut();
+
+            showLoginError(
+                "Для этого аккаунта не найден профиль."
+            );
+
+            return;
+
+        }
+
+
+        currentProfile =
+            profile;
+
+
+        loginScreen.style.display =
+            "none";
+
+        app.style.display =
+            "block";
+
+
+        setupInterface();
+
+        await loadPlayers();
+
+
+    }catch(error){
+
+        console.error(
+            "APPLICATION ERROR:",
+            error
+        );
+
+        showLoginError(
+            "Не удалось загрузить профиль."
+        );
+
+    }
 
 }
 
 
 /* =========================================================
-   PROFILE
+   LOAD PROFILE
 ========================================================= */
 
-async function loadProfile(){
+async function loadProfile(id){
 
-    const {data,error} =
-        await supabaseClient
-        .from("profiles")
-        .select("*")
-        .eq("id",currentUser.id)
-        .maybeSingle();
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id",id)
+    .maybeSingle();
+
 
     if(error){
 
-        console.error(error);
-
-        toast(
-            "Не удалось загрузить профиль: " + error.message,
-            "error"
+        console.error(
+            "PROFILE ERROR:",
+            error
         );
 
-        return;
-    }
-
-    if(!data){
-
-        toast(
-            "Профиль пользователя не найден в таблице profiles.",
-            "error"
-        );
-
-        return;
-    }
-
-    currentProfile = data;
-
-    updateInterface();
-
-    await loadAccount();
-
-    await loadUserData();
-
-    if(currentProfile.role === "admin"){
-
-        $("adminNav").style.display = "block";
-
-        await loadPlayers();
-
-    }else{
-
-        $("adminNav").style.display = "none";
+        return null;
 
     }
+
+
+    return data;
 
 }
 
@@ -1701,529 +1568,126 @@ async function loadProfile(){
    INTERFACE
 ========================================================= */
 
-function updateInterface(){
+function setupInterface(){
 
-    const name =
-        currentProfile.full_name ||
-        currentProfile.name ||
-        currentUser.email;
+    const isAdmin =
+        currentProfile.role === "admin";
 
-    $("topName").textContent = name;
 
-    $("topAvatar").textContent =
-        initials(name);
+    const fullName =
+        currentProfile.full_name
+        ||
+        currentUser.user_metadata?.full_name
+        ||
+        currentUser.email
+        ||
+        "Пользователь";
 
-    $("profileAvatar").textContent =
-        initials(name);
 
-    $("profileName").textContent =
-        name;
+    const initials =
+        getInitials(fullName);
 
-    $("profileEmail").textContent =
-        currentUser.email;
 
-    $("profileFullName").value =
-        currentProfile.full_name || "";
+    document.getElementById(
+        "topName"
+    ).textContent =
+        fullName;
 
-    $("profileBirthDate").value =
-        currentProfile.birth_date || "";
 
-    $("profilePassport").value =
-        currentProfile.passport_number || "";
+    document.getElementById(
+        "topRole"
+    ).textContent =
+        isAdmin
+        ? "Администратор"
+        : "Игрок";
 
-    $("profileRole").value =
-        currentProfile.role === "admin"
-            ? "Администратор"
-            : "Игрок";
 
-    $("profileStatus").value =
-        currentProfile.blocked
-            ? "Заблокирован"
-            : "Активен";
+    document.getElementById(
+        "topAvatar"
+    ).textContent =
+        initials;
 
-    $("topRole").textContent =
-        currentProfile.role === "admin"
-            ? "АДМИНИСТРАТОР"
-            : "ИГРОК";
 
-    $("dashboardGreeting").textContent =
-        "Здравствуйте, " + name;
+    document.getElementById(
+        "profileAvatar"
+    ).textContent =
+        initials;
 
-    $("statStatus").textContent =
-        currentProfile.blocked
-            ? "Заблокирован"
-            : "Активен";
 
-}
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        fullName;
 
 
-/* =========================================================
-   ACCOUNT
-========================================================= */
+    document.getElementById(
+        "profileRole"
+    ).textContent =
+        isAdmin
+        ? "Администратор"
+        : "Игрок";
 
-async function loadAccount(){
 
-    const {data,error} =
-        await supabaseClient
-        .from("bank_accounts")
-        .select("*")
-        .eq("user_id",currentUser.id)
-        .maybeSingle();
+    document.getElementById(
+        "profileFullName"
+    ).textContent =
+        currentProfile.full_name
+        || "Не указано";
 
-    if(error){
 
-        console.error(error);
-        return;
+    document.getElementById(
+        "profileBirth"
+    ).textContent =
+        currentProfile.birth_date
+        || "Не указана";
 
-    }
 
-    currentAccount = data;
+    document.getElementById(
+        "profilePassport"
+    ).textContent =
+        currentProfile.passport_number
+        || "Не указан";
 
-    const balance =
-        data?.balance || 0;
 
-    $("mainBalance").textContent =
-        money(balance);
+    document.getElementById(
+        "profileEmail"
+    ).textContent =
+        currentUser.email
+        || "—";
 
-    $("statBalance").textContent =
-        money(balance);
 
-    $("accountNumber").textContent =
-        "Номер счёта: " +
-        (data?.account_number || "—");
+    document.getElementById(
+        "profileStatus"
+    ).innerHTML =
+        currentProfile.frozen
+        ?
+        '<span class="badge badge-frozen">Заморожен</span>'
+        :
+        '<span class="badge badge-active">Активен</span>';
 
-}
 
-
-/* =========================================================
-   USER DATA
-========================================================= */
-
-async function loadUserData(){
-
-    await Promise.all([
-        loadTransactions(),
-        loadFines(),
-        loadLoans()
-    ]);
-
-}
-
-
-/* =========================================================
-   TRANSACTIONS
-========================================================= */
-
-async function loadTransactions(){
-
-    const {data,error} =
-        await supabaseClient
-        .from("transactions")
-        .select("*")
-        .eq("user_id",currentUser.id)
-        .order("created_at",{ascending:false});
-
-    if(error){
-
-        console.error("transactions:",error);
-        return;
-
-    }
-
-    renderTransactions(data || []);
-
-}
-
-
-/* =========================================================
-   RENDER TRANSACTIONS
-========================================================= */
-
-function renderTransactions(rows){
-
-    const tbody =
-        $("transactionsTable");
-
-    const recent =
-        $("recentTransactions");
-
-    tbody.innerHTML = "";
-
-    if(!rows.length){
-
-        tbody.innerHTML =
-            `<tr>
-                <td colspan="4" style="color:#71849c;text-align:center;">
-                    Операций пока нет
-                </td>
-            </tr>`;
-
-        recent.innerHTML =
-            `<div style="color:#71849c;font-size:13px;">
-                Операций пока нет
-            </div>`;
-
-        return;
-
-    }
-
-    rows.forEach(row=>{
-
-        const amount =
-            Number(
-                row.amount ||
-                row.sum ||
-                0
-            );
-
-        const positive =
-            amount >= 0;
-
-        tbody.innerHTML += `
-            <tr>
-                <td>${dateFormat(row.created_at)}</td>
-
-                <td>
-                    <span class="badge ${positive ? "green":"red"}">
-                        ${positive ? "Зачисление":"Списание"}
-                    </span>
-                </td>
-
-                <td style="font-weight:700;color:${positive ? "#4ade80":"#f87171"}">
-                    ${positive ? "+" : ""}${money(amount)}
-                </td>
-
-                <td>
-                    ${escapeHtml(
-                        row.description ||
-                        row.type ||
-                        "Банковская операция"
-                    )}
-                </td>
-            </tr>
-        `;
-
-    });
-
-
-    recent.innerHTML =
-        rows.slice(0,5).map(row=>{
-
-            const amount =
-                Number(row.amount || row.sum || 0);
-
-            return `
-                <div style="
-                    display:flex;
-                    justify-content:space-between;
-                    padding:10px 0;
-                    border-bottom:1px solid rgba(255,255,255,.05);
-                ">
-                    <div>
-                        <div style="font-size:12px;">
-                            ${escapeHtml(
-                                row.description ||
-                                row.type ||
-                                "Операция"
-                            )}
-                        </div>
-
-                        <div style="font-size:10px;color:#64748b;">
-                            ${dateFormat(row.created_at)}
-                        </div>
-                    </div>
-
-                    <strong style="color:${amount >= 0 ? "#4ade80":"#f87171"}">
-                        ${amount >= 0 ? "+" : ""}${money(amount)}
-                    </strong>
-                </div>
-            `;
-
-        }).join("");
-
-}
-
-
-/* =========================================================
-   FINES
-========================================================= */
-
-async function loadFines(){
-
-    const {data,error} =
-        await supabaseClient
-        .from("fines")
-        .select("*")
-        .eq("user_id",currentUser.id)
-        .order("created_at",{ascending:false});
-
-    if(error){
-
-        console.error("fines:",error);
-        return;
-
-    }
-
-    renderFines(data || []);
-
-}
-
-
-/* =========================================================
-   RENDER FINES
-========================================================= */
-
-function renderFines(rows){
-
-    const tbody =
-        $("finesTable");
-
-    tbody.innerHTML = "";
-
-    let total = 0;
-
-    rows.forEach(row=>{
-
-        const amount =
-            Number(row.amount || 0);
-
-        const paid =
-            row.paid === true ||
-            row.status === "paid";
-
-        if(!paid)
-            total += amount;
-
-        tbody.innerHTML += `
-            <tr>
-
-                <td>
-                    ${escapeHtml(
-                        row.id?.toString().slice(0,8) ||
-                        "—"
-                    )}
-                </td>
-
-                <td>
-                    <strong>
-                        ${escapeHtml(
-                            row.title ||
-                            row.name ||
-                            "Штраф"
-                        )}
-                    </strong>
-                </td>
-
-                <td>
-                    ${money(amount)}
-                </td>
-
-                <td>
-                    <span class="badge ${paid ? "green":"red"}">
-                        ${paid ? "Оплачен":"Не оплачен"}
-                    </span>
-                </td>
-
-                <td>
-                    ${
-                        paid
-                        ? "—"
-                        : `<button
-                            class="btn-small btn-green"
-                            onclick="payFine('${row.id}')"
-                           >
-                            Оплатить
-                           </button>`
-                    }
-                </td>
-
-            </tr>
-        `;
-
-    });
-
-    $("statFines").textContent =
-        money(total);
-
-}
-
-
-/* =========================================================
-   PAY FINE
-========================================================= */
-
-async function payFine(id){
-
-    try{
-
-        const {error} =
-            await supabaseClient
-            .rpc("pay_fine",{
-                fine_id:id
-            });
-
-        if(error)
-            throw error;
-
-        toast("Штраф успешно оплачен.");
-
-        await loadUserData();
-        await loadAccount();
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "Ошибка оплаты штрафа: " +
-            error.message,
-            "error"
-        );
-
-    }
-
-}
-
-
-/* =========================================================
-   LOANS
-========================================================= */
-
-async function loadLoans(){
-
-    const {data,error} =
-        await supabaseClient
-        .from("loans")
-        .select("*")
-        .eq("user_id",currentUser.id)
-        .order("created_at",{ascending:false});
-
-    if(error){
-
-        console.error("loans:",error);
-        return;
-
-    }
-
-    renderLoans(data || []);
-
-}
-
-
-/* =========================================================
-   RENDER LOANS
-========================================================= */
-
-function renderLoans(rows){
-
-    const tbody =
-        $("loansTable");
-
-    tbody.innerHTML = "";
-
-    let total = 0;
-
-    rows.forEach(row=>{
-
-        const amount =
-            Number(
-                row.remaining_amount ??
-                row.remaining ??
-                row.amount ??
-                0
-            );
-
-        const paid =
-            row.paid === true ||
-            row.status === "paid" ||
-            amount <= 0;
-
-        if(!paid)
-            total += amount;
-
-        tbody.innerHTML += `
-            <tr>
-
-                <td>
-                    ${escapeHtml(
-                        row.id?.toString().slice(0,8) ||
-                        "—"
-                    )}
-                </td>
-
-                <td>
-                    ${money(
-                        row.amount || 0
-                    )}
-                </td>
-
-                <td>
-                    ${money(amount)}
-                </td>
-
-                <td>
-                    <span class="badge ${paid ? "green":"yellow"}">
-                        ${paid ? "Погашен":"Активен"}
-                    </span>
-                </td>
-
-                <td>
-                    ${
-                        paid
-                        ? "—"
-                        : `<button
-                            class="btn-small btn-green"
-                            onclick="payLoan('${row.id}')"
-                           >
-                            Погасить
-                           </button>`
-                    }
-                </td>
-
-            </tr>
-        `;
-
-    });
-
-    $("statLoans").textContent =
-        money(total);
-
-}
-
-
-/* =========================================================
-   PAY LOAN
-========================================================= */
-
-async function payLoan(id){
-
-    try{
-
-        const {error} =
-            await supabaseClient
-            .rpc("pay_loan",{
-                loan_id:id
-            });
-
-        if(error)
-            throw error;
-
-        toast("Платёж по кредиту выполнен.");
-
-        await loadUserData();
-        await loadAccount();
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "Ошибка платежа: " +
-            error.message,
-            "error"
-        );
-
-    }
+    document.getElementById(
+        "adminNavigation"
+    ).style.display =
+        isAdmin
+        ? "block"
+        : "none";
+
+
+    document.getElementById(
+        "adminCards"
+    ).style.display =
+        isAdmin
+        ? "grid"
+        : "none";
+
+
+    document.getElementById(
+        "playerBalanceCard"
+    ).style.display =
+        isAdmin
+        ? "none"
+        : "block";
 
 }
 
@@ -2234,33 +1698,118 @@ async function payLoan(id){
 
 async function loadPlayers(){
 
-    if(currentProfile?.role !== "admin")
-        return;
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("profiles")
+    .select("*")
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
 
-    const {data,error} =
-        await supabaseClient
-        .from("profiles")
-        .select("*")
-        .order("full_name");
 
     if(error){
 
-        console.error("players:",error);
+        console.error(
+            "PLAYERS ERROR:",
+            error
+        );
 
         toast(
-            "Не удалось загрузить игроков: " +
-            error.message,
-            "error"
+            "Не удалось загрузить игроков."
         );
 
         return;
 
     }
 
-    allPlayers = data || [];
 
-    renderPlayers(allPlayers);
-    fillPlayerSelects(allPlayers);
+    players =
+        data || [];
+
+
+    updateStatistics();
+
+    renderPlayers();
+
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+function updateStatistics(){
+
+    const onlyPlayers =
+        players.filter(
+            p => p.role !== "admin"
+        );
+
+
+    const total =
+        onlyPlayers.length;
+
+
+    const frozen =
+        onlyPlayers.filter(
+            p => p.frozen === true
+        ).length;
+
+
+    const active =
+        total - frozen;
+
+
+    const balance =
+        onlyPlayers.reduce(
+            (sum,p) =>
+                sum + Number(
+                    p.balance || 0
+                ),
+            0
+        );
+
+
+    document.getElementById(
+        "statPlayers"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "statBalance"
+    ).textContent =
+        money(balance);
+
+
+    document.getElementById(
+        "statFrozen"
+    ).textContent =
+        frozen;
+
+
+    document.getElementById(
+        "statActive"
+    ).textContent =
+        active;
+
+
+    if(currentProfile){
+
+        document.getElementById(
+            "myBalance"
+        ).textContent =
+            money(
+                currentProfile.balance || 0
+            );
+
+    }
 
 }
 
@@ -2269,653 +1818,608 @@ async function loadPlayers(){
    RENDER PLAYERS
 ========================================================= */
 
-async function renderPlayers(players){
+function renderPlayers(){
 
-    const tbody =
-        $("playersTable");
+    const table =
+        document.getElementById(
+            "playersTable"
+        );
 
-    tbody.innerHTML = "";
 
-    if(!players.length){
-
-        tbody.innerHTML =
-            `<tr>
-                <td colspan="5" style="text-align:center;color:#71849c;">
-                    Игроков нет
-                </td>
-            </tr>`;
-
+    if(!table){
         return;
-
     }
 
 
-    const ids =
-        players.map(x=>x.id);
-
-    let accounts = [];
-
-    if(ids.length){
-
-        const result =
-            await supabaseClient
-            .from("bank_accounts")
-            .select("*")
-            .in("user_id",ids);
-
-        if(!result.error)
-            accounts = result.data || [];
-
-    }
+    const search =
+        (
+            document.getElementById(
+                "playerSearch"
+            )?.value || ""
+        )
+        .toLowerCase();
 
 
-    players.forEach(player=>{
+    const filtered =
+        players
+        .filter(
+            p => p.role !== "admin"
+        )
+        .filter(
+            p => {
 
-        const account =
-            accounts.find(
-                a => a.user_id === player.id
-            );
+                const text =
+                    [
+                        p.full_name,
+                        p.passport_number,
+                        p.id
+                    ]
+                    .join(" ")
+                    .toLowerCase();
 
-        const name =
-            player.full_name ||
-            player.name ||
-            "Без имени";
+                return text.includes(search);
 
-        const balance =
-            account?.balance || 0;
+            }
+        );
 
-        const blocked =
-            player.blocked === true;
 
-        tbody.innerHTML += `
+    if(!filtered.length){
+
+        table.innerHTML = `
             <tr>
-
-                <td>
-                    <div style="display:flex;align-items:center;gap:10px;">
-
-                        <div style="
-                            width:35px;
-                            height:35px;
-                            border-radius:10px;
-                            display:flex;
-                            align-items:center;
-                            justify-content:center;
-                            background:rgba(59,130,246,.15);
-                            color:#60a5fa;
-                            font-weight:800;
-                        ">
-                            ${initials(name)}
-                        </div>
-
-                        <div>
-                            <strong>
-                                ${escapeHtml(name)}
-                            </strong>
-
-                            <div style="font-size:10px;color:#64748b;">
-                                ${player.role === "admin" ? "Администратор":"Игрок"}
-                            </div>
-                        </div>
-
-                    </div>
+                <td colspan="5"
+                    style="text-align:center;color:#718096;padding:30px">
+                    Игроки не найдены
                 </td>
-
-                <td>
-                    ${escapeHtml(player.email || "—")}
-                </td>
-
-                <td>
-                    <strong>
-                        ${money(balance)}
-                    </strong>
-                </td>
-
-                <td>
-                    <span class="badge ${blocked ? "red":"green"}">
-                        ${blocked ? "Заблокирован":"Активен"}
-                    </span>
-                </td>
-
-                <td>
-
-                    <div class="actions">
-
-                        <button
-                            class="btn-small btn-blue"
-                            onclick="openPlayer('${player.id}')"
-                        >
-                            Профиль
-                        </button>
-
-                        ${
-                            player.id !== currentUser.id
-                            ?
-                            `<button
-                                class="btn-small ${blocked ? "btn-green":"btn-red"}"
-                                onclick="togglePlayer('${player.id}',${!blocked})"
-                            >
-                                ${blocked ? "Разблокировать":"Заблокировать"}
-                            </button>`
-                            : ""
-                        }
-
-                    </div>
-
-                </td>
-
             </tr>
         `;
 
-    });
-
-}
-
-
-/* =========================================================
-   PLAYER SELECTS
-========================================================= */
-
-function fillPlayerSelects(players){
-
-    const selects = [
-        $("operationPlayer"),
-        $("finePlayer"),
-        $("loanPlayer")
-    ];
-
-    selects.forEach(select=>{
-
-        if(!select)
-            return;
-
-        select.innerHTML =
-            `<option value="">Выберите игрока</option>`;
-
-        players
-            .filter(p => p.role !== "admin")
-            .forEach(player=>{
-
-                const name =
-                    player.full_name ||
-                    player.name ||
-                    player.email ||
-                    "Игрок";
-
-                select.innerHTML += `
-                    <option value="${player.id}">
-                        ${escapeHtml(name)}
-                    </option>
-                `;
-
-            });
-
-    });
-
-}
-
-
-/* =========================================================
-   OPEN PLAYER
-========================================================= */
-
-async function openPlayer(id){
-
-    const player =
-        allPlayers.find(p=>p.id === id);
-
-    if(!player)
         return;
 
-    const {data:account} =
-        await supabaseClient
-        .from("bank_accounts")
-        .select("*")
-        .eq("user_id",id)
-        .maybeSingle();
-
-    const name =
-        player.full_name ||
-        player.name ||
-        "Без имени";
-
-    $("playerModalContent").innerHTML = `
-
-        <div class="profile-head">
-
-            <div class="big-avatar">
-                ${initials(name)}
-            </div>
-
-            <div>
-                <h2>
-                    ${escapeHtml(name)}
-                </h2>
-
-                <p>
-                    ${escapeHtml(player.email || "—")}
-                </p>
-            </div>
-
-        </div>
+    }
 
 
-        <div class="form-grid">
+    table.innerHTML =
+        filtered.map(
+            p => {
 
-            <div class="field">
-                <label>ФИО</label>
-                <input value="${escapeHtml(player.full_name || "")}" readonly>
-            </div>
+                const name =
+                    p.full_name
+                    || "Без имени";
 
-            <div class="field">
-                <label>Дата рождения</label>
-                <input value="${escapeHtml(player.birth_date || "")}" readonly>
-            </div>
 
-            <div class="field">
-                <label>Номер паспорта</label>
-                <input value="${escapeHtml(player.passport_number || "")}" readonly>
-            </div>
+                return `
+                <tr>
 
-            <div class="field">
-                <label>Баланс</label>
-                <input value="${money(account?.balance || 0)}" readonly>
-            </div>
+                    <td>
 
-            <div class="field">
-                <label>Статус</label>
-                <input value="${player.blocked ? "Заблокирован":"Активен"}" readonly>
-            </div>
+                        <div style="font-weight:700">
+                            ${escapeHtml(name)}
+                        </div>
 
-        </div>
+                        <div style="font-size:10px;color:#718096;margin-top:4px">
+                            ${escapeHtml(p.id)}
+                        </div>
 
-    `;
+                    </td>
 
-    $("playerModal").classList.add("show");
+
+                    <td>
+                        ${escapeHtml(
+                            p.full_name || "—"
+                        )}
+                    </td>
+
+
+                    <td>
+                        <strong>
+                            ${money(p.balance || 0)}
+                        </strong>
+                    </td>
+
+
+                    <td>
+
+                        ${
+                            p.frozen
+
+                            ?
+
+                            '<span class="badge badge-frozen">Заморожен</span>'
+
+                            :
+
+                            '<span class="badge badge-active">Активен</span>'
+                        }
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+                            <button
+                                class="btn btn-blue"
+                                onclick="editPlayer('${p.id}')"
+                            >
+                                Изменить
+                            </button>
+
+
+                            <button
+                                class="btn ${
+                                    p.frozen
+                                    ? "btn-green"
+                                    : "btn-red"
+                                }"
+                                onclick="toggleFreeze('${p.id}',${!p.frozen})"
+                            >
+                                ${
+                                    p.frozen
+                                    ? "Разморозить"
+                                    : "Заморозить"
+                                }
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   EDIT PLAYER
+========================================================= */
+
+function editPlayer(id){
+
+    const player =
+        players.find(
+            p => p.id === id
+        );
+
+
+    if(!player){
+        return;
+    }
+
+
+    document.getElementById(
+        "editId"
+    ).value =
+        player.id;
+
+
+    document.getElementById(
+        "editFullName"
+    ).value =
+        player.full_name || "";
+
+
+    document.getElementById(
+        "editBirthDate"
+    ).value =
+        player.birth_date || "";
+
+
+    document.getElementById(
+        "editPassport"
+    ).value =
+        player.passport_number || "";
+
+
+    document.getElementById(
+        "editBalance"
+    ).value =
+        player.balance || 0;
+
+
+    document.getElementById(
+        "editModal"
+    ).classList.add("show");
 
 }
 
 
 function closeModal(){
 
-    $("playerModal").classList.remove("show");
+    document.getElementById(
+        "editModal"
+    ).classList.remove("show");
 
 }
 
 
 /* =========================================================
-   BLOCK / UNBLOCK
+   SAVE PLAYER
 ========================================================= */
 
-async function togglePlayer(id,blocked){
+async function savePlayer(){
 
-    if(currentProfile?.role !== "admin")
+    if(currentProfile.role !== "admin"){
+
+        toast(
+            "Недостаточно прав."
+        );
+
         return;
 
-    try{
+    }
 
-        const {error} =
-            await supabaseClient
-            .rpc("admin_set_blocked",{
-                target_user_id:id,
-                new_blocked:blocked
-            });
 
-        if(error)
-            throw error;
+    const id =
+        document.getElementById(
+            "editId"
+        ).value;
 
-        toast(
-            blocked
-            ? "Игрок заблокирован."
-            : "Игрок разблокирован."
+
+    const full_name =
+        document.getElementById(
+            "editFullName"
+        ).value.trim();
+
+
+    const birth_date =
+        document.getElementById(
+            "editBirthDate"
+        ).value
+        || null;
+
+
+    const passport_number =
+        document.getElementById(
+            "editPassport"
+        ).value.trim();
+
+
+    const balance =
+        Number(
+            document.getElementById(
+                "editBalance"
+            ).value
+        ) || 0;
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+    .from("profiles")
+    .update({
+
+        full_name,
+
+        birth_date,
+
+        passport_number,
+
+        balance
+
+    })
+    .eq(
+        "id",
+        id
+    );
+
+
+    if(error){
+
+        console.error(
+            error
         );
 
-        await loadPlayers();
-
-    }catch(error){
-
-        console.error(error);
-
         toast(
-            "Ошибка изменения статуса: " +
-            error.message,
-            "error"
+            "Ошибка сохранения: "
+            + error.message
         );
+
+        return;
 
     }
+
+
+    closeModal();
+
+    toast(
+        "Профиль игрока сохранён."
+    );
+
+
+    await loadPlayers();
 
 }
 
 
 /* =========================================================
-   BANK OPERATION
+   FREEZE
 ========================================================= */
 
-$("bankOperationForm").addEventListener("submit",async e=>{
+async function toggleFreeze(
+    id,
+    value
+){
 
-    e.preventDefault();
-
-    if(currentProfile?.role !== "admin")
-        return;
-
-    const userId =
-        $("operationPlayer").value;
-
-    const amount =
-        Number($("operationAmount").value);
-
-    const type =
-        $("operationType").value;
-
-    const description =
-        $("operationDescription").value.trim();
-
-    if(!userId || amount <= 0){
+    if(currentProfile.role !== "admin"){
 
         toast(
-            "Заполни все обязательные поля.",
-            "error"
+            "Недостаточно прав."
         );
 
         return;
 
     }
 
-    try{
 
-        let rpcName;
+    const {
+        error
+    } =
+    await supabaseClient
+    .from("profiles")
+    .update({
 
-        let params = {
-            target_user_id:userId,
-            amount:amount
-        };
+        frozen:value
 
-        if(type === "deposit"){
+    })
+    .eq(
+        "id",
+        id
+    );
 
-            rpcName = "admin_deposit";
 
-        }else{
+    if(error){
 
-            rpcName = "admin_withdraw";
-
-        }
-
-        if(description)
-            params.description = description;
-
-        const {error} =
-            await supabaseClient
-            .rpc(rpcName,params);
-
-        if(error)
-            throw error;
-
-        toast(
-            type === "deposit"
-            ? "Средства зачислены."
-            : "Средства сняты."
+        console.error(
+            error
         );
 
-        $("bankOperationForm").reset();
-
-        await loadPlayers();
-
-    }catch(error){
-
-        console.error(error);
-
         toast(
-            "Ошибка операции: " +
-            error.message,
-            "error"
+            "Ошибка: " + error.message
         );
 
-    }
-
-});
-
-
-/* =========================================================
-   CREATE FINE
-========================================================= */
-
-$("fineForm").addEventListener("submit",async e=>{
-
-    e.preventDefault();
-
-    if(currentProfile?.role !== "admin")
         return;
 
-    const userId =
-        $("finePlayer").value;
-
-    const amount =
-        Number($("fineAmount").value);
-
-    const title =
-        $("fineTitle").value.trim();
-
-    const description =
-        $("fineDescription").value.trim();
-
-    try{
-
-        const {error} =
-            await supabaseClient
-            .rpc("admin_create_fine",{
-                target_user_id:userId,
-                fine_amount:amount,
-                fine_title:title,
-                fine_description:description
-            });
-
-        if(error)
-            throw error;
-
-        toast("Штраф успешно начислен.");
-
-        $("fineForm").reset();
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "Ошибка начисления штрафа: " +
-            error.message,
-            "error"
-        );
-
     }
 
-});
+
+    toast(
+        value
+        ? "Аккаунт заморожен."
+        : "Аккаунт разморожен."
+    );
 
 
-/* =========================================================
-   CREATE LOAN
-========================================================= */
+    await loadPlayers();
 
-$("loanForm").addEventListener("submit",async e=>{
-
-    e.preventDefault();
-
-    if(currentProfile?.role !== "admin")
-        return;
-
-    const userId =
-        $("loanPlayer").value;
-
-    const amount =
-        Number($("loanAmount").value);
-
-    const percent =
-        Number($("loanPercent").value || 0);
-
-    const term =
-        Number($("loanTerm").value || 30);
-
-    const description =
-        $("loanDescription").value.trim();
-
-    try{
-
-        const {error} =
-            await supabaseClient
-            .rpc("admin_create_loan",{
-                target_user_id:userId,
-                loan_amount:amount,
-                interest_rate:percent,
-                loan_term:term,
-                loan_description:description
-            });
-
-        if(error)
-            throw error;
-
-        toast("Кредит успешно выдан.");
-
-        $("loanForm").reset();
-
-    }catch(error){
-
-        console.error(error);
-
-        toast(
-            "Ошибка выдачи кредита: " +
-            error.message,
-            "error"
-        );
-
-    }
-
-});
+}
 
 
 /* =========================================================
    NAVIGATION
 ========================================================= */
 
-const pageNames = {
+function openPage(
+    page,
+    button
+){
 
-    dashboard:"Главная",
-    profile:"Профиль",
-    transactions:"Операции",
-    fines:"Штрафы",
-    loans:"Кредиты",
-    players:"Игроки",
-    bankOperations:"Банковские операции",
-    adminFines:"Управление штрафами",
-    adminLoans:"Управление кредитами"
-
-};
+    document
+    .querySelectorAll(".page")
+    .forEach(
+        p =>
+        p.classList.remove("active")
+    );
 
 
-document.querySelectorAll(".nav-btn")
-.forEach(button=>{
-
-    button.addEventListener("click",()=>{
-
-        const page =
-            button.dataset.page;
-
-        if(
-            ["players","bankOperations","adminFines","adminLoans"]
-            .includes(page)
-            &&
-            currentProfile?.role !== "admin"
-        ){
-            return;
-        }
-
-        document
-        .querySelectorAll(".nav-btn")
-        .forEach(x=>x.classList.remove("active"));
-
-        button.classList.add("active");
-
-        document
-        .querySelectorAll(".page")
-        .forEach(x=>x.classList.remove("active"));
-
-        const target =
-            $("page-" + page);
-
-        if(target)
-            target.classList.add("active");
-
-        $("pageTitle").textContent =
-            pageNames[page] || "Stability Bank";
-
-        $("sidebar").classList.remove("open");
-
-    });
-
-});
+    const target =
+        document.getElementById(
+            "page-" + page
+        );
 
 
-/* =========================================================
-   MOBILE MENU
-========================================================= */
+    if(target){
 
-$("mobileMenu").addEventListener("click",()=>{
+        target.classList.add(
+            "active"
+        );
 
-    $("sidebar").classList.toggle("open");
+    }
 
-});
+
+    document
+    .querySelectorAll(".nav-btn")
+    .forEach(
+        b =>
+        b.classList.remove("active")
+    );
+
+
+    if(button){
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+}
 
 
 /* =========================================================
    LOGOUT
 ========================================================= */
 
-$("logoutButton").addEventListener("click",async()=>{
+async function logout(){
 
-    await supabaseClient.auth.signOut();
+    await supabaseClient
+    .auth
+    .signOut();
+
 
     currentUser = null;
     currentProfile = null;
-    currentAccount = null;
+    players = [];
 
-    $("app").style.display = "none";
-    $("authScreen").style.display = "flex";
 
-    $("loginPassword").value = "";
+    app.style.display =
+        "none";
 
-});
+
+    loginScreen.style.display =
+        "flex";
+
+
+    document.getElementById(
+        "password"
+    ).value = "";
+
+}
 
 
 /* =========================================================
-   AUTH STATE LISTENER
+   HELPERS
 ========================================================= */
 
-supabaseClient.auth.onAuthStateChange(
-    async(event,session)=>{
+function money(value){
 
-        console.log("Auth event:",event);
+    return Number(
+        value || 0
+    ).toLocaleString(
+        "ru-RU",
+        {
+            minimumFractionDigits:2,
+            maximumFractionDigits:2
+        }
+    ) + " ₽";
+
+}
+
+
+function getInitials(name){
+
+    const parts =
+        name
+        .trim()
+        .split(/\s+/)
+        .filter(Boolean);
+
+
+    if(!parts.length){
+        return "?";
+    }
+
+
+    if(parts.length === 1){
+
+        return parts[0]
+        .slice(0,2)
+        .toUpperCase();
+
+    }
+
+
+    return (
+        parts[0][0]
+        +
+        parts[1][0]
+    ).toUpperCase();
+
+}
+
+
+function escapeHtml(value){
+
+    return String(value ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+function toast(message){
+
+    const el =
+        document.getElementById(
+            "toast"
+        );
+
+
+    el.textContent =
+        message;
+
+
+    el.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () => {
+
+            el.classList.remove(
+                "show"
+            );
+
+        },
+        3000
+    );
+
+}
+
+
+function showLoginError(message){
+
+    loginError.textContent =
+        message;
+
+    loginError.style.display =
+        "block";
+
+}
+
+
+function hideLoginError(){
+
+    loginError.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   SUPABASE AUTH STATE
+========================================================= */
+
+supabaseClient
+.auth
+.onAuthStateChange(
+    async (event,session) => {
 
         if(
-            event === "SIGNED_IN" &&
-            session?.user
+            event === "SIGNED_OUT"
         ){
 
-            currentUser = session.user;
-
-        }
-
-        if(event === "SIGNED_OUT"){
-
             currentUser = null;
+
+            currentProfile = null;
+
+            return;
 
         }
 
     }
 );
-
-
-/* =========================================================
-   START
-========================================================= */
-
-checkSession();
 
 </script>
 
