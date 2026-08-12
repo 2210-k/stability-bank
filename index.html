@@ -1,0 +1,2271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стабильность Банк</title>
+
+    <!-- Подключение Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // ⚠️ ВСТАВЬТЕ СВОИ ДАННЫЕ ИЗ SUPABASE (Project Settings → API)
+        const SUPABASE_URL = "https://aomxqvtmuavirfsxxdcy.supabase.co/rest/v1/";
+        const SUPABASE_KEY = "sb_publishable_Ai25dkiDJ8QIkwy89CDUfw_Wo6ay2RY";
+
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* =========================================================
+           ВЕСЬ CSS (полностью из вашего файла, без изменений)
+           ========================================================= */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+        }
+
+        :root {
+            --bg: #07111f;
+            --bg2: #0b1729;
+            --card: #101e31;
+            --card2: #13243b;
+            --border: rgba(255, 255, 255, .08);
+            --primary: #4f7cff;
+            --primary2: #6c5ce7;
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #38bdf8;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --shadow: 0 20px 60px rgba(0, 0, 0, .35);
+        }
+
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at 10% 10%, rgba(79, 124, 255, .15), transparent 35%),
+                radial-gradient(circle at 90% 80%, rgba(108, 92, 231, .12), transparent 35%),
+                var(--bg);
+            color: var(--text);
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+        button {
+            cursor: pointer;
+        }
+        .hidden {
+            display: none !important;
+        }
+
+        /* =========================
+           AUTH
+        ========================= */
+        #authScreen {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+        }
+
+        .auth-box {
+            width: 100%;
+            max-width: 460px;
+            background: rgba(16, 30, 49, .92);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(25px);
+        }
+
+        .auth-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary2));
+            font-size: 38px;
+            box-shadow: 0 15px 40px rgba(79, 124, 255, .35);
+        }
+
+        .auth-title {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-weight: 600;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap i {
+            position: absolute;
+            left: 17px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted);
+        }
+
+        .input {
+            width: 100%;
+            padding: 15px 18px 15px 48px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: #0b1729;
+            color: white;
+            outline: none;
+            transition: .2s;
+        }
+
+        .input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 124, 255, .12);
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 16px;
+            border: 0;
+            border-radius: 15px;
+            color: white;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary2));
+            transition: .2s;
+        }
+
+        .auth-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .auth-error {
+            background: rgba(239, 68, 68, .12);
+            border: 1px solid rgba(239, 68, 68, .3);
+            color: #fca5a5;
+            padding: 13px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        /* =========================
+           APP
+        ========================= */
+        #app {
+            min-height: 100vh;
+        }
+
+        .topbar {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 35px;
+            background: rgba(7, 17, 31, .85);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary2));
+            font-size: 23px;
+        }
+
+        .brand-name {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .brand-name span {
+            color: #7c9cff;
+        }
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 700;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .logout {
+            border: 1px solid var(--border);
+            background: #101e31;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 13px;
+        }
+
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        .sidebar {
+            width: 260px;
+            padding: 25px 15px;
+            border-right: 1px solid var(--border);
+            background: rgba(8, 19, 34, .75);
+        }
+
+        .nav-item {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 7px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #94a3b8;
+            border-radius: 13px;
+            border: 0;
+            background: transparent;
+            text-align: left;
+            transition: .2s;
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, .05);
+            color: white;
+        }
+
+        .nav-item.active {
+            color: white;
+            background: linear-gradient(135deg, rgba(79, 124, 255, .22), rgba(108, 92, 231, .16));
+            border: 1px solid rgba(79, 124, 255, .2);
+        }
+
+        .main {
+            flex: 1;
+            padding: 35px;
+            max-width: 1600px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-header {
+            margin-bottom: 25px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 850;
+        }
+
+        .page-subtitle {
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat {
+            padding: 23px;
+            background: linear-gradient(145deg, rgba(16, 30, 49, .96), rgba(19, 36, 59, .96));
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: rgba(79, 124, 255, .12);
+            color: #7c9cff;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 27px;
+            font-weight: 850;
+        }
+
+        .card {
+            background: linear-gradient(145deg, rgba(16, 30, 49, .97), rgba(13, 26, 44, .97));
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: var(--shadow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* =========================
+           PROFILE
+        ========================= */
+        .profile-head {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar {
+            width: 78px;
+            height: 78px;
+            border-radius: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--primary2));
+        }
+
+        .profile-name {
+            font-size: 27px;
+            font-weight: 850;
+        }
+
+        .profile-id {
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .profile-fields {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .profile-field {
+            padding: 16px;
+            background: rgba(255, 255, 255, .035);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+
+        .profile-field span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .profile-field strong {
+            font-size: 15px;
+        }
+
+        /* =========================
+           MONEY
+        ========================= */
+        .balance-card {
+            padding: 30px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #294cae, #5734a8);
+            box-shadow: 0 25px 60px rgba(55, 70, 180, .25);
+        }
+
+        .balance-label {
+            color: #dbeafe;
+        }
+
+        .balance {
+            font-size: 43px;
+            font-weight: 900;
+            margin: 8px 0 25px;
+        }
+
+        .money-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .money-box {
+            padding: 23px;
+            border-radius: 20px;
+            background: #101e31;
+            border: 1px solid var(--border);
+        }
+
+        .money-box.danger {
+            border-left: 4px solid var(--danger);
+        }
+
+        .money-box.warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .money-box-title {
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .money-box-value {
+            font-size: 27px;
+            font-weight: 850;
+        }
+
+        /* =========================
+           BUTTONS
+        ========================= */
+        .btn {
+            border: 0;
+            border-radius: 12px;
+            padding: 12px 17px;
+            color: white;
+            font-weight: 700;
+            transition: .2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary2));
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: #111827;
+        }
+
+        .btn-secondary {
+            background: #24344b;
+        }
+
+        .btn-small {
+            padding: 8px 11px;
+            font-size: 12px;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 13px;
+            color: #94a3b8;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 15px 13px;
+            border-top: 1px solid var(--border);
+            color: #e2e8f0;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, .02);
+        }
+
+        /* =========================
+           BADGES
+        ========================= */
+        .badge {
+            display: inline-flex;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .badge-green {
+            background: rgba(34, 197, 94, .12);
+            color: #86efac;
+        }
+
+        .badge-red {
+            background: rgba(239, 68, 68, .12);
+            color: #fca5a5;
+        }
+
+        .badge-yellow {
+            background: rgba(245, 158, 11, .12);
+            color: #fcd34d;
+        }
+
+        /* =========================
+           FINE / LOAN
+        ========================= */
+        .item-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .item {
+            padding: 18px;
+            border-radius: 16px;
+            background: #0d1a2d;
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .item-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
+
+        .fine-number {
+            background: rgba(239, 68, 68, .13);
+            color: #f87171;
+        }
+
+        .loan-number {
+            background: rgba(245, 158, 11, .13);
+            color: #fbbf24;
+        }
+
+        .item-title {
+            font-weight: 800;
+        }
+
+        .item-description {
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 3px;
+        }
+
+        .item-price {
+            font-size: 19px;
+            font-weight: 850;
+        }
+
+        /* =========================
+           FORMS
+        ========================= */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            color: #cbd5e1;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 13px 15px;
+            background: #0b1729;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+        }
+
+        /* =========================
+           ADMIN USERS
+        ========================= */
+        .user-card {
+            padding: 18px;
+            background: #0d1a2d;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .user-main {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary2));
+            font-weight: 900;
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        /* =========================
+           OPERATIONS
+        ========================= */
+        .operation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .operation {
+            padding: 22px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: #0d1a2d;
+            transition: .2s;
+            cursor: pointer;
+        }
+
+        .operation:hover {
+            border-color: rgba(79, 124, 255, .6);
+            transform: translateY(-2px);
+        }
+
+        .operation-icon {
+            font-size: 27px;
+            margin-bottom: 12px;
+        }
+
+        .operation-title {
+            font-weight: 800;
+        }
+
+        .operation-desc {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .72);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow: auto;
+            background: #101e31;
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .modal-title {
+            font-size: 22px;
+            font-weight: 850;
+        }
+
+        .close {
+            border: 0;
+            background: #24344b;
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+        }
+
+        /* =========================
+           TOAST
+        ========================= */
+        .toast {
+            position: fixed;
+            right: 25px;
+            bottom: 25px;
+            max-width: 400px;
+            padding: 15px 18px;
+            border-radius: 15px;
+            background: #13243b;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            transform: translateY(130px);
+            opacity: 0;
+            transition: .3s;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+        @media (max-width: 1000px) {
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            .sidebar {
+                width: 210px;
+            }
+            .operation-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .topbar {
+                padding: 0 15px;
+            }
+            .brand-name {
+                display: none;
+            }
+            .sidebar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 70px;
+                z-index: 100;
+                padding: 8px;
+                display: flex;
+                justify-content: space-around;
+                border-top: 1px solid var(--border);
+                border-right: 0;
+            }
+            .nav-item {
+                width: auto;
+                flex: 1;
+                justify-content: center;
+                flex-direction: column;
+                padding: 7px;
+                margin: 0;
+                font-size: 10px;
+                gap: 3px;
+            }
+            .nav-item span {
+                display: block;
+            }
+            .main {
+                padding: 20px;
+                padding-bottom: 100px;
+            }
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            .grid-2,
+            .money-grid,
+            .profile-fields,
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .operation-grid {
+                grid-template-columns: 1fr;
+            }
+            .page-title {
+                font-size: 25px;
+            }
+            .balance {
+                font-size: 34px;
+            }
+            .user-info {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- =========================================================
+         AUTH
+    ========================================================= -->
+    <div id="authScreen">
+        <div class="auth-box">
+            <div class="auth-logo">🏦</div>
+            <div class="auth-title">Стабильность Банк</div>
+            <div class="auth-subtitle">Безопасная авторизация</div>
+            <div id="authError" class="auth-error"></div>
+            <div class="input-group">
+                <label>Email (логин)</label>
+                <div class="input-wrap">
+                    <i class="fa-solid fa-user"></i>
+                    <input id="loginInput" class="input" placeholder="Введите email" autocomplete="username">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Пароль</label>
+                <div class="input-wrap">
+                    <i class="fa-solid fa-lock"></i>
+                    <input id="passwordInput" type="password" class="input" placeholder="Введите пароль" autocomplete="current-password">
+                </div>
+            </div>
+            <button class="auth-button" onclick="login()">
+                <i class="fa-solid fa-right-to-bracket"></i> Войти
+            </button>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         APP
+    ========================================================= -->
+    <div id="app" class="hidden">
+        <header class="topbar">
+            <div class="brand">
+                <div class="brand-icon">🏦</div>
+                <div class="brand-name">Стабильность <span>Банк</span></div>
+            </div>
+            <div class="user-area">
+                <div class="user-info">
+                    <div id="topUserName" class="user-name">—</div>
+                    <div id="topUserRole" class="user-role">—</div>
+                </div>
+                <button class="logout" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </div>
+        </header>
+
+        <div class="layout">
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <button class="nav-item active" data-page="dashboard" onclick="openPage('dashboard')">
+                    <i class="fa-solid fa-house"></i><span>Главная</span>
+                </button>
+                <button class="nav-item" data-page="profile" onclick="openPage('profile')">
+                    <i class="fa-solid fa-user"></i><span>Мой профиль</span>
+                </button>
+                <button class="nav-item" data-page="fines" onclick="openPage('fines')">
+                    <i class="fa-solid fa-file-circle-xmark"></i><span>Штрафы</span>
+                </button>
+                <button class="nav-item" data-page="loans" onclick="openPage('loans')">
+                    <i class="fa-solid fa-building-columns"></i><span>Кредиты</span>
+                </button>
+                <button class="nav-item" data-page="transfers" onclick="openPage('transfers')">
+                    <i class="fa-solid fa-money-bill-transfer"></i><span>Переводы</span>
+                </button>
+                <!-- ADMIN -->
+                <button id="adminUsersNav" class="nav-item hidden" data-page="users" onclick="openPage('users')">
+                    <i class="fa-solid fa-users"></i><span>Игроки</span>
+                </button>
+                <button id="adminOperationsNav" class="nav-item hidden" data-page="operations" onclick="openPage('operations')">
+                    <i class="fa-solid fa-screwdriver-wrench"></i><span>Операции</span>
+                </button>
+                <button id="adminHistoryNav" class="nav-item hidden" data-page="history" onclick="openPage('history')">
+                    <i class="fa-solid fa-clock-rotate-left"></i><span>История</span>
+                </button>
+            </aside>
+
+            <main class="main">
+
+                <!-- =========================================================
+                     PLAYER DASHBOARD
+                ========================================================= -->
+                <section id="page-dashboard" class="page active">
+                    <div class="page-header">
+                        <div class="page-title">Добро пожаловать 👋</div>
+                        <div class="page-subtitle">Ваш банковский кабинет</div>
+                    </div>
+                    <!-- PLAYER -->
+                    <div id="playerDashboard">
+                        <div class="balance-card">
+                            <div class="balance-label">Текущий баланс</div>
+                            <div id="playerBalance" class="balance">0 ₽</div>
+                            <button class="btn btn-secondary" onclick="openPage('transfers')">
+                                <i class="fa-solid fa-paper-plane"></i> Перевести деньги
+                            </button>
+                        </div>
+                        <br>
+                        <div class="money-grid">
+                            <div class="money-box danger">
+                                <div class="money-box-title">🚨 Неоплаченные штрафы</div>
+                                <div id="dashboardFines" class="money-box-value">0 ₽</div>
+                            </div>
+                            <div class="money-box warning">
+                                <div class="money-box-title">🏦 Остаток кредитов</div>
+                                <div id="dashboardLoans" class="money-box-value">0 ₽</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ADMIN DASHBOARD -->
+                    <div id="adminDashboard" class="hidden">
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="stat-top">
+                                    <div>
+                                        <div class="stat-label">Игроков</div>
+                                        <div id="statUsers" class="stat-value">0</div>
+                                    </div>
+                                    <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                                </div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-top">
+                                    <div>
+                                        <div class="stat-label">Общий баланс</div>
+                                        <div id="statBalance" class="stat-value">0 ₽</div>
+                                    </div>
+                                    <div class="stat-icon">💰</div>
+                                </div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-top">
+                                    <div>
+                                        <div class="stat-label">Штрафы</div>
+                                        <div id="statFines" class="stat-value">0 ₽</div>
+                                    </div>
+                                    <div class="stat-icon">🚨</div>
+                                </div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-top">
+                                    <div>
+                                        <div class="stat-label">Кредиты</div>
+                                        <div id="statLoans" class="stat-value">0 ₽</div>
+                                    </div>
+                                    <div class="stat-icon">🏦</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Панель администратора</div>
+                                <span class="badge badge-green">ADMIN</span>
+                            </div>
+                            <p style="color:#94a3b8">Администратор управляет банковской системой. Баланса, штрафов и кредитов у администратора нет.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =========================================================
+                     PROFILE
+                ========================================================= -->
+                <section id="page-profile" class="page">
+                    <div class="page-header">
+                        <div class="page-title">Мой профиль</div>
+                        <div class="page-subtitle">Персональная информация</div>
+                    </div>
+                    <div class="card">
+                        <div class="profile-head">
+                            <div id="profileAvatar" class="avatar">А</div>
+                            <div>
+                                <div id="profileName" class="profile-name">—</div>
+                                <div id="profileLogin" class="profile-id">Логин: —</div>
+                            </div>
+                        </div>
+                        <div class="profile-fields">
+                            <div class="profile-field">
+                                <span>ФИО</span>
+                                <strong id="profileFullName">—</strong>
+                            </div>
+                            <div class="profile-field">
+                                <span>Дата рождения</span>
+                                <strong id="profileBirthDate">—</strong>
+                            </div>
+                            <div class="profile-field">
+                                <span>Номер паспорта</span>
+                                <strong id="profilePassport">—</strong>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =========================================================
+                     FINES
+                ========================================================= -->
+                <section id="page-fines" class="page">
+                    <div class="page-header">
+                        <div class="page-title">Мои штрафы</div>
+                        <div class="page-subtitle">Каждый штраф оплачивается отдельно или все сразу</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Штрафы</div>
+                            <button id="payAllFinesBtn" class="btn btn-danger" onclick="payAllFinesPlayer()">
+                                <i class="fa-solid fa-check-double"></i> Оплатить все
+                            </button>
+                        </div>
+                        <div id="playerFinesList" class="item-list"></div>
+                    </div>
+                </section>
+
+                <!-- =========================================================
+                     LOANS
+                ========================================================= -->
+                <section id="page-loans" class="page">
+                    <div class="page-header">
+                        <div class="page-title">Мои кредиты</div>
+                        <div class="page-subtitle">Кредит можно погашать частями или полностью</div>
+                    </div>
+                    <div class="card">
+                        <div id="playerLoansList" class="item-list"></div>
+                    </div>
+                </section>
+
+                <!-- =========================================================
+                     TRANSFERS
+                ========================================================= -->
+                <section id="page-transfers" class="page">
+                    <div class="page-header">
+                        <div class="page-title">Перевод денег</div>
+                        <div class="page-subtitle">Перевод другому игроку</div>
+                    </div>
+                    <div class="card">
+                        <div class="form-group">
+                            <label>Получатель</label>
+                            <select id="transferRecipient" class="form-control"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Сумма</label>
+                            <input id="transferAmount" class="form-control" type="number" min="1" placeholder="Например: 5000">
+                        </div>
+                        <div class="form-group">
+                            <label>Назначение</label>
+                            <input id="transferDescription" class="form-control" placeholder="Перевод">
+                        </div>
+                        <button class="btn btn-primary" onclick="makeTransfer()">
+                            <i class="fa-solid fa-paper-plane"></i> Перевести
+                        </button>
+                    </div>
+                </section>
+
+                <!-- =========================================================
+                     ADMIN USERS
+                ========================================================= -->
+                <section id="page-users" class="page">
+                    <div class="page-header">
+                        <div class="page-title">Управление игроками</div>
+                        <div class="page-subtitle">Все аккаунты банковской системы</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Игроки</div>
+                            <button class="btn btn-primary" onclick="openCreateUserModal()">
+                                <i class="fa-solid fa-user-plus"></i> Добавить игрока
+                            </button>
+                        </div>
+                        <div id="adminUsersList"></div>
+                    </div>
+                </section>
+
+                <!-- =========================================================
+                     ADMIN OPERATIONS
+                ========================================================= -->
+                <section id="page-operations" class="page">
+                    <div class="page-header">
+                        <div class="page-title">Банковские операции</div>
+                        <div class="page-subtitle">Административное управление счетами</div>
+                    </div>
+                    <div class="card">
+                        <div class="form-group">
+                            <label>Игрок</label>
+                            <select id="operationUser" class="form-control" onchange="operationUserChanged()"></select>
+                        </div>
+                        <div id="operationUserInfo" class="hidden">
+                            <div class="money-grid">
+                                <div class="money-box">
+                                    <div class="money-box-title">Баланс</div>
+                                    <div id="opBalance" class="money-box-value">0 ₽</div>
+                                </div>
+                                <div class="money-box danger">
+                                    <div class="money-box-title">Штрафы</div>
+                                    <div id="opFines" class="money-box-value">0 ₽</div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="operation-grid">
+                                <div class="operation" onclick="openAdminAction('deposit')">
+                                    <div class="operation-icon">💰</div>
+                                    <div class="operation-title">Пополнение</div>
+                                    <div class="operation-desc">Зачислить деньги</div>
+                                </div>
+                                <div class="operation" onclick="openAdminAction('withdraw')">
+                                    <div class="operation-icon">🏧</div>
+                                    <div class="operation-title">Снятие</div>
+                                    <div class="operation-desc">Списать деньги</div>
+                                </div>
+                                <div class="operation" onclick="openAdminAction('fine')">
+                                    <div class="operation-icon">🚨</div>
+                                    <div class="operation-title">Штраф</div>
+                                    <div class="operation-desc">Выписать новый штраф</div>
+                                </div>
+                                <div class="operation" onclick="openAdminAction('loan')">
+                                    <div class="operation-icon">🏦</div>
+                                    <div class="operation-title">Кредит</div>
+                                    <div class="operation-desc">Выдать кредит</div>
+                                </div>
+                                <div class="operation" onclick="openAdminAction('salary')">
+                                    <div class="operation-icon">💼</div>
+                                    <div class="operation-title">Зарплата</div>
+                                    <div class="operation-desc">Начислить зарплату</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- =========================================================
+                     ADMIN HISTORY
+                ========================================================= -->
+                <section id="page-history" class="page">
+                    <div class="page-header">
+                        <div class="page-title">История системы</div>
+                        <div class="page-subtitle">Все операции игроков</div>
+                    </div>
+                    <div class="card">
+                        <div id="adminHistoryList" class="table-wrap"></div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- =========================================================
+         MODAL
+    ========================================================= -->
+    <div id="modal" class="modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div id="modalTitle" class="modal-title">—</div>
+                <button class="close" onclick="closeModal()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"><span id="toastText"></span></div>
+
+    <!-- =========================================================
+         НОВЫЙ JAVASCRIPT (ПОЛНОСТЬЮ ПЕРЕПИСАН)
+    ========================================================= -->
+    <script>
+        /* =========================================================
+           ИНИЦИАЛИЗАЦИЯ SUPABASE
+        ========================================================= */
+        const sb = supabaseClient;
+
+        /* =========================================================
+           ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ
+        ========================================================= */
+        let currentUser = null; // профиль текущего пользователя
+        let currentBalance = 0; // баланс
+        let allPlayers = []; // список всех игроков (для админа)
+        let activeFines = []; // активные штрафы текущего игрока
+        let activeLoans = []; // активные кредиты
+        let allTransactions = []; // история (для админа)
+
+        /* =========================================================
+           ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+        ========================================================= */
+        function money(value) {
+            return Number(value || 0).toLocaleString('ru-RU') + ' ₽';
+        }
+
+        function now() {
+            return new Date().toLocaleString('ru-RU');
+        }
+
+        function escapeHtml(str) {
+            return String(str ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function toast(message, type = 'success') {
+            const el = document.getElementById('toast');
+            const text = document.getElementById('toastText');
+            text.textContent = message;
+            el.className = 'toast show ' + type;
+            setTimeout(() => { el.className = 'toast'; }, 3500);
+        }
+
+        /* =========================================================
+           АВТОРИЗАЦИЯ
+        ========================================================= */
+        async function login() {
+            const email = document.getElementById('loginInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            const error = document.getElementById('authError');
+
+            try {
+                const { data, error: signInError } = await sb.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (signInError) {
+                    error.textContent = 'Неверный email или пароль.';
+                    error.style.display = 'block';
+                    return;
+                }
+
+                error.style.display = 'none';
+                await loadUserData();
+                showApp();
+
+            } catch (err) {
+                error.textContent = 'Ошибка соединения.';
+                error.style.display = 'block';
+            }
+        }
+
+        async function logout() {
+            await sb.auth.signOut();
+            currentUser = null;
+            document.getElementById('app').classList.add('hidden');
+            document.getElementById('authScreen').style.display = 'flex';
+            document.getElementById('passwordInput').value = '';
+        }
+
+        async function checkSession() {
+            const { data: { session } } = await sb.auth.getSession();
+            if (session) {
+                await loadUserData();
+                showApp();
+            }
+        }
+
+        async function loadUserData() {
+            const { data: { user } } = await sb.auth.getUser();
+            if (!user) return;
+
+            // Профиль
+            const { data: profile, error: profileErr } = await sb
+                .from('profiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
+
+            if (profileErr) throw profileErr;
+            currentUser = profile;
+
+            // Проверка блокировки
+            if (currentUser.blocked) {
+                await sb.auth.signOut();
+                alert('Ваш аккаунт заблокирован.');
+                return;
+            }
+
+            // Баланс
+            const { data: account, error: accErr } = await sb
+                .from('bank_accounts')
+                .select('balance')
+                .eq('user_id', user.id)
+                .single();
+
+            if (!accErr && account) {
+                currentBalance = account.balance;
+            } else {
+                currentBalance = 0;
+            }
+
+            // Если админ – загружаем список игроков и историю
+            if (currentUser.role === 'admin') {
+                await loadPlayers();
+                await loadAdminHistory();
+            } else {
+                await loadPlayerFinesAndLoans();
+            }
+        }
+
+        /* =========================================================
+           ЗАГРУЗКА ДАННЫХ ДЛЯ ИГРОКА
+        ========================================================= */
+        async function loadPlayerFinesAndLoans() {
+            if (!currentUser) return;
+
+            const { data: fines, error: fineErr } = await sb.rpc('get_active_fines', {
+                p_user_id: currentUser.id
+            });
+            if (!fineErr) activeFines = fines || [];
+
+            const { data: loans, error: loanErr } = await sb.rpc('get_active_loans', {
+                p_user_id: currentUser.id
+            });
+            if (!loanErr) activeLoans = loans || [];
+        }
+
+        /* =========================================================
+           ЗАГРУЗКА СПИСКА ИГРОКОВ (АДМИН)
+        ========================================================= */
+        async function loadPlayers() {
+            const { data, error } = await sb
+                .from('profiles')
+                .select('*, bank_accounts(balance)')
+                .eq('role', 'player')
+                .order('full_name');
+
+            if (!error) {
+                allPlayers = data.map(p => ({
+                    ...p,
+                    balance: p.bank_accounts?.balance || 0,
+                    bank_accounts: undefined
+                }));
+            }
+        }
+
+        /* =========================================================
+           ЗАГРУЗКА ИСТОРИИ (АДМИН)
+        ========================================================= */
+        async function loadAdminHistory() {
+            const { data, error } = await sb
+                .from('transactions')
+                .select('*, profiles(full_name)')
+                .order('created_at', { ascending: false });
+
+            if (!error) allTransactions = data;
+        }
+
+        /* =========================================================
+           ОТОБРАЖЕНИЕ ПРИЛОЖЕНИЯ
+        ========================================================= */
+        function showApp() {
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('app').classList.remove('hidden');
+
+            document.getElementById('topUserName').textContent =
+                currentUser.role === 'admin' ? 'Администратор' : currentUser.full_name;
+
+            document.getElementById('topUserRole').textContent =
+                currentUser.role === 'admin' ? 'Администратор' : 'Игрок';
+
+            if (currentUser.role === 'admin') {
+                setupAdmin();
+            } else {
+                setupPlayer();
+            }
+
+            openPage('dashboard');
+        }
+
+        /* =========================================================
+           НАСТРОЙКА ИГРОКА
+        ========================================================= */
+        function setupPlayer() {
+            document.getElementById('playerDashboard').classList.remove('hidden');
+            document.getElementById('adminDashboard').classList.add('hidden');
+
+            document.getElementById('adminUsersNav').classList.add('hidden');
+            document.getElementById('adminOperationsNav').classList.add('hidden');
+            document.getElementById('adminHistoryNav').classList.add('hidden');
+
+            renderPlayer();
+            updateTransferRecipients();
+        }
+
+        /* =========================================================
+           ОТРИСОВКА ИГРОКА
+        ========================================================= */
+        function renderPlayer() {
+            if (!currentUser) return;
+
+            document.getElementById('playerBalance').textContent = money(currentBalance);
+
+            const finesSum = activeFines.reduce((s, f) => s + Number(f.amount), 0);
+            document.getElementById('dashboardFines').textContent = money(finesSum);
+
+            const loansSum = activeLoans.reduce((s, l) => s + Number(l.remaining), 0);
+            document.getElementById('dashboardLoans').textContent = money(loansSum);
+
+            const avatar = document.getElementById('profileAvatar');
+            avatar.textContent = currentUser.full_name ? currentUser.full_name[0].toUpperCase() : '?';
+
+            document.getElementById('profileName').textContent = currentUser.full_name;
+            document.getElementById('profileLogin').textContent = 'Логин: ' + currentUser.username;
+            document.getElementById('profileFullName').textContent = currentUser.full_name;
+            document.getElementById('profileBirthDate').textContent = '—';
+            document.getElementById('profilePassport').textContent = '—';
+
+            renderFines();
+            renderLoans();
+            updateTransferRecipients();
+        }
+
+        /* =========================================================
+           ШТРАФЫ (ИГРОК)
+        ========================================================= */
+        function renderFines() {
+            const container = document.getElementById('playerFinesList');
+
+            if (!activeFines.length) {
+                container.innerHTML = `
+                    <div style="padding:30px;text-align:center;color:#94a3b8">
+                        <i class="fa-solid fa-circle-check" style="font-size:35px;color:#22c55e;margin-bottom:12px"></i><br>
+                        Штрафов нет
+                    </div>`;
+                document.getElementById('payAllFinesBtn').disabled = true;
+                return;
+            }
+
+            document.getElementById('payAllFinesBtn').disabled = false;
+
+            container.innerHTML = activeFines.map((fine, index) => `
+                <div class="item">
+                    <div class="item-left">
+                        <div class="item-number fine-number">№${index+1}</div>
+                        <div>
+                            <div class="item-title">Штраф №${index+1}</div>
+                            <div class="item-description">${escapeHtml(fine.reason)} • ${new Date(fine.created_at).toLocaleString('ru-RU')}</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:12px">
+                        <div class="item-price">${money(fine.amount)}</div>
+                        <button class="btn btn-danger btn-small" onclick="payFine('${fine.id}')">Оплатить</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function payFine(fineId) {
+            const fine = activeFines.find(f => f.id === fineId);
+            if (!fine) return;
+
+            if (currentBalance < fine.amount) {
+                toast('Недостаточно средств для оплаты штрафа.', 'error');
+                return;
+            }
+
+            if (!confirm(`Оплатить штраф полностью?\n\n${money(fine.amount)}`)) return;
+
+            try {
+                await sb.rpc('pay_fine', {
+                    p_fine_id: fineId,
+                    p_amount: fine.amount
+                });
+
+                await loadUserData();
+                await loadPlayerFinesAndLoans();
+                renderPlayer();
+                toast('Штраф полностью оплачен.');
+            } catch (err) {
+                toast(err.message || 'Ошибка оплаты.', 'error');
+            }
+        }
+
+        async function payAllFinesPlayer() {
+            if (!activeFines.length) return;
+
+            const total = activeFines.reduce((s, f) => s + Number(f.amount), 0);
+            if (currentBalance < total) {
+                toast(`Для оплаты всех штрафов нужно ${money(total)}.`, 'error');
+                return;
+            }
+
+            if (!confirm(`Оплатить ВСЕ штрафы?\n\nОбщая сумма: ${money(total)}`)) return;
+
+            try {
+                for (const fine of activeFines) {
+                    await sb.rpc('pay_fine', {
+                        p_fine_id: fine.id,
+                        p_amount: fine.amount
+                    });
+                }
+
+                await loadUserData();
+                await loadPlayerFinesAndLoans();
+                renderPlayer();
+                toast('Все штрафы оплачены.');
+            } catch (err) {
+                toast(err.message || 'Ошибка.', 'error');
+            }
+        }
+
+        /* =========================================================
+           КРЕДИТЫ (ИГРОК)
+        ========================================================= */
+        function renderLoans() {
+            const container = document.getElementById('playerLoansList');
+
+            if (!activeLoans.length) {
+                container.innerHTML = `
+                    <div style="padding:30px;text-align:center;color:#94a3b8">
+                        <i class="fa-solid fa-circle-check" style="font-size:35px;color:#22c55e;margin-bottom:12px"></i><br>
+                        Активных кредитов нет
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = activeLoans.map((loan, index) => `
+                <div class="item">
+                    <div class="item-left">
+                        <div class="item-number loan-number">№${index+1}</div>
+                        <div>
+                            <div class="item-title">Кредит №${index+1}</div>
+                            <div class="item-description">
+                                Выдано: ${money(loan.principal)} ${loan.percent ? ' • ' + loan.percent + '%' : ''}<br>
+                                Осталось: ${money(loan.remaining)}
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-warning btn-small" onclick="openLoanPayment('${loan.id}')">Погасить</button>
+                </div>
+            `).join('');
+        }
+
+        function openLoanPayment(loanId) {
+            const loan = activeLoans.find(l => l.id === loanId);
+            if (!loan) return;
+
+            openModal(
+                'Погашение кредита',
+                `
+                <div class="form-group">
+                    <label>Остаток кредита</label>
+                    <div class="money-box-value">${money(loan.remaining)}</div>
+                </div>
+                <div class="form-group">
+                    <label>Сумма погашения</label>
+                    <input id="loanPaymentAmount" type="number" min="1" max="${loan.remaining}" class="form-control" placeholder="Можно погасить частично">
+                </div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap">
+                    <button class="btn btn-secondary" onclick="setLoanAmount('${loanId}',25)">25%</button>
+                    <button class="btn btn-secondary" onclick="setLoanAmount('${loanId}',50)">50%</button>
+                    <button class="btn btn-secondary" onclick="setLoanAmount('${loanId}',100)">Весь кредит</button>
+                </div>
+                <br>
+                <button class="btn btn-success" onclick="payLoan('${loanId}')"><i class="fa-solid fa-check"></i> Погасить</button>
+                `
+            );
+        }
+
+        function setLoanAmount(loanId, percent) {
+            const loan = activeLoans.find(l => l.id === loanId);
+            if (!loan) return;
+            const amount = percent === 100 ? loan.remaining : Math.floor(loan.remaining * percent / 100);
+            document.getElementById('loanPaymentAmount').value = amount;
+        }
+
+        async function payLoan(loanId) {
+            const loan = activeLoans.find(l => l.id === loanId);
+            if (!loan) return;
+
+            const amount = Number(document.getElementById('loanPaymentAmount').value);
+            if (!amount || amount <= 0) {
+                toast('Введите сумму.', 'error');
+                return;
+            }
+            if (amount > loan.remaining) {
+                toast('Нельзя заплатить больше остатка.', 'error');
+                return;
+            }
+            if (amount > currentBalance) {
+                toast('Недостаточно средств.', 'error');
+                return;
+            }
+
+            try {
+                await sb.rpc('pay_loan', {
+                    p_loan_id: loanId,
+                    p_amount: amount
+                });
+
+                await loadUserData();
+                await loadPlayerFinesAndLoans();
+                closeModal();
+                renderPlayer();
+                toast(`Погашено ${money(amount)}`);
+            } catch (err) {
+                toast(err.message || 'Ошибка погашения.', 'error');
+            }
+        }
+
+        /* =========================================================
+           ПЕРЕВОДЫ
+        ========================================================= */
+        async function updateTransferRecipients() {
+            const select = document.getElementById('transferRecipient');
+            if (!select || !currentUser) return;
+
+            const { data, error } = await sb
+                .from('profiles')
+                .select('id, full_name, username')
+                .eq('role', 'player')
+                .neq('id', currentUser.id);
+
+            if (error) return;
+
+            select.innerHTML = `
+                <option value="">-- Выберите игрока --</option>
+                ${data.map(p => `
+                    <option value="${p.id}">${escapeHtml(p.full_name)} — ${escapeHtml(p.username)}</option>
+                `).join('')}
+            `;
+        }
+
+        async function makeTransfer() {
+            const recipientId = document.getElementById('transferRecipient').value;
+            const amount = Number(document.getElementById('transferAmount').value);
+            const description = document.getElementById('transferDescription').value.trim() || 'Перевод другому игроку';
+
+            if (!recipientId) {
+                toast('Выберите получателя.', 'error');
+                return;
+            }
+            if (!amount || amount <= 0) {
+                toast('Введите корректную сумму.', 'error');
+                return;
+            }
+            if (amount > currentBalance) {
+                toast('Недостаточно средств.', 'error');
+                return;
+            }
+
+            try {
+                await sb.rpc('bank_transfer', {
+                    p_recipient: recipientId,
+                    p_amount: amount,
+                    p_description: description
+                });
+
+                await loadUserData();
+                renderPlayer();
+                document.getElementById('transferAmount').value = '';
+                toast(`Перевод ${money(amount)} выполнен.`);
+            } catch (err) {
+                toast(err.message || 'Ошибка перевода.', 'error');
+            }
+        }
+
+        /* =========================================================
+           НАСТРОЙКА АДМИНА
+        ========================================================= */
+        function setupAdmin() {
+            document.getElementById('playerDashboard').classList.add('hidden');
+            document.getElementById('adminDashboard').classList.remove('hidden');
+
+            document.getElementById('adminUsersNav').classList.remove('hidden');
+            document.getElementById('adminOperationsNav').classList.remove('hidden');
+            document.getElementById('adminHistoryNav').classList.remove('hidden');
+
+            renderAdmin();
+        }
+
+        /* =========================================================
+           ОТРИСОВКА АДМИНА
+        ========================================================= */
+        function renderAdmin() {
+            const totalBalance = allPlayers.reduce((s, p) => s + Number(p.balance), 0);
+            // Штрафы и кредиты – вычислим из allTransactions (упрощённо)
+            let totalFines = 0,
+                totalLoans = 0;
+            allTransactions.forEach(t => {
+                if (t.type === 'fine' && t.status === 'pending') totalFines += Number(t.amount);
+                if (t.type === 'loan' && t.status === 'pending') totalLoans += Number(t.amount);
+            });
+
+            document.getElementById('statUsers').textContent = allPlayers.length;
+            document.getElementById('statBalance').textContent = money(totalBalance);
+            document.getElementById('statFines').textContent = money(totalFines);
+            document.getElementById('statLoans').textContent = money(totalLoans);
+
+            renderAdminUsers();
+            renderOperationUsers();
+            renderAdminHistory();
+        }
+
+        /* =========================================================
+           АДМИН: ПОЛЬЗОВАТЕЛИ
+        ========================================================= */
+        function renderAdminUsers() {
+            const container = document.getElementById('adminUsersList');
+            if (!allPlayers.length) {
+                container.innerHTML = '<p style="color:#94a3b8">Игроков нет.</p>';
+                return;
+            }
+
+            container.innerHTML = allPlayers.map(user => `
+                <div class="user-card">
+                    <div class="user-main">
+                        <div class="user-avatar">${user.full_name ? user.full_name[0] : '?'}</div>
+                        <div>
+                            <div style="font-weight:800">${escapeHtml(user.full_name)}</div>
+                            <div style="color:#94a3b8;font-size:12px">${escapeHtml(user.username)} • ${user.balance ? money(user.balance) : '0 ₽'}</div>
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        ${user.blocked 
+                            ? `<button class="btn btn-success btn-small" onclick="toggleBlock('${user.id}')"><i class="fa-solid fa-unlock"></i> Разблокировать</button>`
+                            : `<button class="btn btn-warning btn-small" onclick="toggleBlock('${user.id}')"><i class="fa-solid fa-snowflake"></i> Заблокировать</button>`
+                        }
+                        <button class="btn btn-primary btn-small" onclick="openEditUser('${user.id}')"><i class="fa-solid fa-pen"></i> Редактировать</button>
+                        <button class="btn btn-danger btn-small" onclick="deleteUser('${user.id}')"><i class="fa-solid fa-trash"></i> Удалить</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function toggleBlock(userId) {
+            try {
+                const user = allPlayers.find(p => p.id === userId);
+                if (!user) return;
+                await sb.rpc('admin_set_blocked', {
+                    p_user_id: userId,
+                    p_blocked: !user.blocked
+                });
+                await loadPlayers();
+                renderAdmin();
+                toast(user.blocked ? 'Аккаунт разблокирован.' : 'Аккаунт заблокирован.');
+            } catch (err) {
+                toast(err.message, 'error');
+            }
+        }
+
+        async function deleteUser(userId) {
+            if (!confirm('Удалить игрока?')) return;
+            try {
+                const { error } = await sb
+                    .from('profiles')
+                    .delete()
+                    .eq('id', userId);
+                if (error) throw error;
+                await loadPlayers();
+                renderAdmin();
+                toast('Игрок удалён.');
+            } catch (err) {
+                toast(err.message, 'error');
+            }
+        }
+
+        function openEditUser(userId) {
+            const user = allPlayers.find(p => p.id === userId);
+            if (!user) return;
+
+            openModal(
+                'Редактирование профиля',
+                `
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Имя</label>
+                        <input id="editFullName" class="form-control" value="${escapeHtml(user.full_name)}">
+                    </div>
+                    <div class="form-group">
+                        <label>Логин (email)</label>
+                        <input id="editUsername" class="form-control" value="${escapeHtml(user.username)}">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="saveUserEdit('${user.id}')"><i class="fa-solid fa-save"></i> Сохранить</button>
+                `
+            );
+        }
+
+        async function saveUserEdit(userId) {
+            const fullName = document.getElementById('editFullName').value.trim();
+            const username = document.getElementById('editUsername').value.trim();
+
+            if (!fullName || !username) {
+                toast('Заполните все поля.', 'error');
+                return;
+            }
+
+            try {
+                const { error } = await sb
+                    .from('profiles')
+                    .update({ full_name: fullName, username: username })
+                    .eq('id', userId);
+                if (error) throw error;
+                await loadPlayers();
+                closeModal();
+                renderAdmin();
+                toast('Профиль обновлён.');
+            } catch (err) {
+                toast(err.message, 'error');
+            }
+        }
+
+        /* =========================================================
+           АДМИН: ДОБАВЛЕНИЕ ИГРОКА (ЧЕРЕЗ РЕГИСТРАЦИЮ)
+        ========================================================= */
+        function openCreateUserModal() {
+            openModal(
+                'Добавление игрока',
+                `
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Email (логин)</label>
+                        <input id="newEmail" class="form-control" placeholder="player@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input id="newPassword" type="password" class="form-control" placeholder="Пароль">
+                    </div>
+                    <div class="form-group full">
+                        <label>Полное имя</label>
+                        <input id="newFullName" class="form-control" placeholder="Иван Иванович">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="createUser()"><i class="fa-solid fa-user-plus"></i> Создать аккаунт</button>
+                `
+            );
+        }
+
+        async function createUser() {
+            const email = document.getElementById('newEmail').value.trim();
+            const password = document.getElementById('newPassword').value;
+            const fullName = document.getElementById('newFullName').value.trim();
+
+            if (!email || !password || !fullName) {
+                toast('Заполните все поля.', 'error');
+                return;
+            }
+
+            try {
+                // 1. Регистрируем пользователя через Supabase Auth
+                const { data, error: signUpError } = await sb.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: fullName,
+                            username: email // используем email как username
+                        }
+                    }
+                });
+
+                if (signUpError) throw signUpError;
+
+                // 2. Триггер handle_new_user автоматически создаст профиль и счёт
+                // Но нужно обновить full_name, т.к. в raw_user_meta_data может не быть
+                if (data.user) {
+                    const { error: updateErr } = await sb
+                        .from('profiles')
+                        .update({ full_name: fullName })
+                        .eq('id', data.user.id);
+                    if (updateErr) console.warn('Не удалось обновить full_name:', updateErr);
+                }
+
+                await loadPlayers();
+                closeModal();
+                renderAdmin();
+                toast('Игрок создан. Проверьте почту (если подтверждение включено).');
+            } catch (err) {
+                toast(err.message || 'Ошибка создания.', 'error');
+            }
+        }
+
+        /* =========================================================
+           АДМИН: ОПЕРАЦИИ
+        ========================================================= */
+        function renderOperationUsers() {
+            const select = document.getElementById('operationUser');
+            if (!select) return;
+            select.innerHTML = `
+                <option value="">-- Выберите игрока --</option>
+                ${allPlayers.map(u => `
+                    <option value="${u.id}">${escapeHtml(u.full_name)} — ${escapeHtml(u.username)}</option>
+                `).join('')}
+            `;
+        }
+
+        async function operationUserChanged() {
+            const userId = document.getElementById('operationUser').value;
+            const box = document.getElementById('operationUserInfo');
+
+            if (!userId) {
+                box.classList.add('hidden');
+                return;
+            }
+
+            const user = allPlayers.find(p => p.id === userId);
+            if (!user) return;
+
+            box.classList.remove('hidden');
+            document.getElementById('opBalance').textContent = money(user.balance);
+
+            const { data: fines } = await sb.rpc('get_active_fines', { p_user_id: userId });
+            const finesSum = (fines || []).reduce((s, f) => s + Number(f.amount), 0);
+            document.getElementById('opFines').textContent = money(finesSum);
+        }
+
+        function openAdminAction(type) {
+            const userId = document.getElementById('operationUser').value;
+            if (!userId) {
+                toast('Сначала выберите игрока.', 'error');
+                return;
+            }
+
+            let title = '';
+            let html = '';
+
+            switch (type) {
+                case 'deposit':
+                    title = 'Пополнение баланса';
+                    html = `
+                        <div class="form-group"><label>Сумма</label><input id="adminAmount" type="number" min="1" class="form-control"></div>
+                        <div class="form-group"><label>Описание</label><input id="adminDescription" class="form-control" placeholder="Пополнение"></div>
+                        <button class="btn btn-success" onclick="executeAdminDeposit('${userId}')">Пополнить</button>
+                    `;
+                    break;
+                case 'withdraw':
+                    title = 'Снятие';
+                    html = `
+                        <div class="form-group"><label>Сумма</label><input id="adminAmount" type="number" min="1" class="form-control"></div>
+                        <div class="form-group"><label>Описание</label><input id="adminDescription" class="form-control" placeholder="Снятие"></div>
+                        <button class="btn btn-danger" onclick="executeAdminWithdraw('${userId}')">Снять</button>
+                    `;
+                    break;
+                case 'fine':
+                    title = 'Выписать штраф';
+                    html = `
+                        <div class="form-group"><label>Сумма штрафа</label><input id="adminAmount" type="number" min="1" class="form-control" placeholder="4000"></div>
+                        <div class="form-group"><label>Причина</label><input id="adminDescription" class="form-control" placeholder="Причина штрафа"></div>
+                        <button class="btn btn-danger" onclick="executeAdminFine('${userId}')">Выписать штраф</button>
+                    `;
+                    break;
+                case 'loan':
+                    title = 'Выдать кредит';
+                    html = `
+                        <div class="form-group"><label>Сумма кредита</label><input id="adminAmount" type="number" min="1" class="form-control"></div>
+                        <div class="form-group"><label>Процент</label><input id="adminPercent" type="number" min="0" value="0" class="form-control"></div>
+                        <button class="btn btn-warning" onclick="executeAdminLoan('${userId}')">Выдать кредит</button>
+                    `;
+                    break;
+                case 'salary':
+                    title = 'Выдать зарплату';
+                    html = `
+                        <div class="form-group"><label>Сумма</label><input id="adminAmount" type="number" min="1" class="form-control"></div>
+                        <div class="form-group"><label>Описание</label><input id="adminDescription" class="form-control" placeholder="Зарплата"></div>
+                        <button class="btn btn-success" onclick="executeAdminDeposit('${userId}')">Начислить</button>
+                    `;
+                    break;
+                default:
+                    return;
+            }
+
+            openModal(title, html);
+        }
+
+        /* Выполнение админ-операций */
+        async function executeAdminDeposit(userId) {
+            const amount = Number(document.getElementById('adminAmount').value);
+            const desc = document.getElementById('adminDescription').value.trim() || 'Пополнение администратором';
+            if (!amount || amount <= 0) { toast('Введите сумму.', 'error'); return; }
+
+            try {
+                await sb.rpc('admin_deposit', {
+                    p_user_id: userId,
+                    p_amount: amount,
+                    p_description: desc
+                });
+                await loadPlayers();
+                closeModal();
+                renderAdmin();
+                toast(`Пополнено ${money(amount)}`);
+            } catch (err) {
+                toast(err.message, 'error');
+            }
+        }
+
+        async function executeAdminWithdraw(userId) {
+            const amount = Number(document.getElementById('adminAmount').value);
+            const desc = document.getElementById('adminDescription').value.trim() || 'Снятие администратором';
+            if (!amount || amount <= 0) { toast('Введите сумму.', 'error'); return; }
+
+            try {
+                await sb.rpc('admin_withdraw', {
+                    p_user_id: userId,
+                    p_amount: amount,
+                    p_description: desc
+                });
+                await loadPlayers();
+                closeModal();
+                renderAdmin();
+                toast(`Снято ${money(amount)}`);
+            } catch (err) {
+                toast(err.message, 'error');
+            }
+        }
+
+        async function executeAdminFine(userId) {
+            const amount = Number(document.getElementById('adminAmount').value);
+            const reason = document.getElementById('adminDescription').value.trim();
+            if (!amount || amount <= 0) { toast('Введите сумму штрафа.', 'error'); return; }
+            if (!reason) { toast('Укажите причину.', 'error'); return; }
+
+            try {
+                await sb.rpc('admin_create_fine', {
+                    p_user_id: userId,
+                    p_amount: amount,
+                    p_reason: reason
+                });
+                await loadPlayers();
+                closeModal();
+                renderAdmin();
+                toast(`Штраф ${money(amount)} выписан.`);
+            } catch (err) {
+                toast(err.message, 'error');
+            }
+        }
+
+        async function executeAdminLoan(userId) {
+            const amount = Number(document.getElementById('adminAmount').value);
+            const percent = Number(document.getElementById('adminPercent').value);
+            if (!amount || amount <= 0) { toast('Введите сумму.', 'error'); return; }
+            if (percent < 0) { toast('Некорректный процент.', 'error'); return; }
+
+            try {
+                await sb.rpc('admin_create_loan', {
+                    p_user_id: userId,
+                    p_amount: amount,
+                    p_percent: percent
+                });
+                await loadPlayers();
+                closeModal();
+                renderAdmin();
+                toast(`Кредит ${money(amount)} выдан.`);
+            } catch (err) {
+                toast(err.message, 'error');
+            }
+        }
+
+        /* =========================================================
+           АДМИН: ИСТОРИЯ
+        ========================================================= */
+        function renderAdminHistory() {
+            const container = document.getElementById('adminHistoryList');
+
+            if (!allTransactions.length) {
+                container.innerHTML = `
+                    <div style="padding:30px;text-align:center;color:#94a3b8">
+                        История операций пуста.
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Игрок</th>
+                            <th>Тип</th>
+                            <th>Сумма</th>
+                            <th>Описание</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${allTransactions.slice(0, 100).map(t => {
+                            const amount = Number(t.amount);
+                            const sign = amount > 0 ? '+' : '';
+                            const color = amount > 0 ? '#4ade80' : amount < 0 ? '#f87171' : '#94a3b8';
+                            return `
+                                <tr>
+                                    <td>${new Date(t.created_at).toLocaleString('ru-RU')}</td>
+                                    <td>${escapeHtml(t.profiles?.full_name || '—')}</td>
+                                    <td>${escapeHtml(t.type)}</td>
+                                    <td style="color:${color}">${sign}${money(amount)}</td>
+                                    <td>${escapeHtml(t.description)}</td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        /* =========================================================
+           ОБЩИЕ ФУНКЦИИ: СТРАНИЦЫ, МОДАЛ, ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
+        ========================================================= */
+        function openPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById('page-' + page);
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            const nav = document.querySelector(`.nav-item[data-page="${page}"]`);
+            if (nav) nav.classList.add('active');
+
+            if (currentUser?.role === 'admin') {
+                if (page === 'users') loadPlayers().then(renderAdmin);
+                if (page === 'operations') loadPlayers().then(renderAdmin);
+                if (page === 'history') loadAdminHistory().then(renderAdmin);
+            } else {
+                if (page === 'dashboard' || page === 'profile') renderPlayer();
+                if (page === 'fines' || page === 'loans') loadPlayerFinesAndLoans().then(renderPlayer);
+            }
+        }
+
+        /* Модальные окна */
+        function openModal(title, body) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalBody').innerHTML = body;
+            document.getElementById('modal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        document.getElementById('modal').addEventListener('click', e => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        /* =========================================================
+           ОБРАБОТЧИКИ СОБЫТИЙ
+        ========================================================= */
+        document.getElementById('passwordInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') login();
+        });
+
+        document.addEventListener('DOMContentLoaded', checkSession);
+    </script>
+</body>
+</html>
